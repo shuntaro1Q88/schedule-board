@@ -1,0 +1,42 @@
+package com.shunproduct.scheduleboard.entity;
+
+public class SiteUsers {
+	
+	@Id
+	private Long id;
+
+	// 社員番号
+	@Column("employee_id")
+	@NotBlank
+	@Pattern(regexp = "[0-9-]{6}")
+	@UniqueLogin // 自作バリデーション
+	private String username;
+
+	// 部署ID
+	@Column("department_id")
+	private int departmentId;
+
+	// グループID
+	@Column("group_id")
+	private int groupId;
+
+	// 姓
+	@Column("family_name")
+	@NotBlank
+	private String familyName;
+
+	// 名
+	@Column("first_name")
+	@NotBlank
+	private String firstName;
+
+	// パスワード
+	@Column("password")
+	@Size(min = 4, max = 16)
+	private String password;
+
+	// 権限
+	@Column("role")
+	private String role;
+
+}

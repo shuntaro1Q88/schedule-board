@@ -1,0 +1,5 @@
+package com.shunproduct.scheduleboard.repository;
+
+public interface SiteUserRepository extends PagingAndSortingRepository<SiteUser, Long> {
+
+}

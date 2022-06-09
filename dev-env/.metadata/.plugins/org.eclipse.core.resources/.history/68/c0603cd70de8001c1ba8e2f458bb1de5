@@ -1,0 +1,5 @@
+package com.shunproduct.scheduleboard.validator;
+
+public class UniqueLoginValidator {
+
+}

@@ -1,0 +1,16 @@
+package com.shunproduct.scheduleboard.repository;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.shunproduct.scheduleboard.entity.SiteUser;
+
+public interface SiteUserRepository extends PagingAndSortingRepository<SiteUser, Long> {
+	
+	/* 
+	 * @param username 6桁社員番号
+	 * 
+	 */
+	
+	SiteUser findByUsername(String username);
+
+}
