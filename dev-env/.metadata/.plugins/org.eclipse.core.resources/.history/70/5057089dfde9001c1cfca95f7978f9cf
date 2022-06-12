@@ -1,0 +1,11 @@
+package com.shunproduct.scheduleboard.service;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class PullDownContentService {
+
+}

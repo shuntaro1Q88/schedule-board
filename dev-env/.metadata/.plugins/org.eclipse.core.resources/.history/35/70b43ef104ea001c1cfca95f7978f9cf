@@ -1,0 +1,13 @@
+package com.shunproduct.scheduleboard.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.shunproduct.scheduleboard.entity.Group;
+
+public interface GroupRepository extends PagingAndSortingRepository<Group, Long> {
+	
+	List<Group> findByDisplayFlagIsTrueOrderByDisplayOrder();
+
+}

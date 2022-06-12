@@ -1,0 +1,29 @@
+package com.shunproduct.scheduleboard.service;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.shunproduct.scheduleboard.repository.GroupRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class PullDownContentService {
+	
+	private final GroupRepository groupRepository;
+	
+	// グループのプルダウンの内容を準備
+	public Map<Integer, String> prepareGroupMasterMap(){
+		
+		List<Group> groupMasterList = (List<Group>) groupRepository.findAll();
+		Map<Integer, String> groupMasterMap = new LinkedHashMap<>();
+		for (int i = 0; i < groupMasterList.size(); i++) {
+			groupMasterMap.put(groupMasterList.get(i).getGroupId(), groupMasterList.get(i).getGroupName());
+			System.out.println(groupMasterList.get(i).getGroupId() + ":" + groupMasterList.get(i).getGroupName());
+		}
+		return groupMasterMap;
+	}
+
+}

@@ -1,0 +1,27 @@
+package com.shunproduct.scheduleboard.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.shunproduct.scheduleboard.entity.SiteUser;
+import com.shunproduct.scheduleboard.repository.SiteUserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Controller
+public class ShowSiteUserController {
+	
+	private final SiteUserRepository siteUserRepository;
+	
+	@GetMapping("/admin/user-list")
+	public String siteUserList(@ModelAttribute("siteUser") SiteUser siteUser, Model model) {
+
+		model.addAttribute("siteUsers", siteUserRepository.findAll());
+
+		return "user-list";
+	}
+
+}
