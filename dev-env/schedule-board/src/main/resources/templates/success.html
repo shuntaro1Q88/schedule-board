@@ -7,12 +7,20 @@
 <body>
   <h2>ログイン成功</h2>
 <!--   <a th:href="@{/logout}">ログアウト</a><br> -->
+    
+    <a th:href="@{/admin/user-list}">ユーザ管理</a>
+    
+    <br>
+    
+    <a th:href="@{/admin/member-list}">メンバー管理</a>
+    
+    <br>
   
     <form method="post" th:action="@{/logout}">
         <button type="submit">ログアウト</button>
     </form>
   
-  <br>
+    <br>
 
 <!--   <form th:action="@{/logout}" method="post">
     <button>ログアウトする</button>

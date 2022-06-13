@@ -34,5 +34,15 @@ public class PullDownContentService {
 		String groupName = groupRepository.findByGroupId(groupId).getGroupName();
 		return groupName;
 	}
+	
+	// 表示/非表示のプルダウンの内容を準備
+	public Map<Boolean, String> prepareDisplayMap() {
+
+		Map<Boolean, String> booleanMap = new LinkedHashMap<>();
+		booleanMap.put(true, "表示");
+		booleanMap.put(false, "非表示");
+
+		return booleanMap;
+	}
 
 }

@@ -1,0 +1,18 @@
+package com.shunproduct.scheduleboard.util;
+
+public enum DisplayFlag {
+
+	TRUE("表示"),
+	FALSE("非表示");
+
+	private final String displayValue;
+
+	private DisplayFlag(String displayValue) {
+		this.displayValue = displayValue;
+	}
+
+	public String getDisplayValue() {
+		return displayValue;
+	}
+
+}

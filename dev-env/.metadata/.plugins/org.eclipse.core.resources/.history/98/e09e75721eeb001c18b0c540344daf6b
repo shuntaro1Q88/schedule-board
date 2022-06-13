@@ -1,0 +1,11 @@
+package com.shunproduct.scheduleboard.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.shunproduct.scheduleboard.entity.GroupMember;
+
+public interface GroupMemberRepository extends PagingAndSortingRepository<GroupMember, Long> {
+
+}

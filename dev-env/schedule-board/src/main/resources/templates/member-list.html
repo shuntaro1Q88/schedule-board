@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  
+  <script type="text/javascript">
+    function disp(){
+    
+      // 「OK」時の処理開始 ＋ 確認ダイアログの表示
+      if(window.confirm('削除しますか？')){
+        
+      }
+      else{
+        window.alert('キャンセルしました。'); // 警告ダイアログを表示
+        return false;
+      }
+    }  
+  </script>
+  
+  <title>行動表示板 メンバー一覧</title>
+</head>
+<body>
+    <!-- Main -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- DataTables -->
+              <div class="card shadow my-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                   メンバー一覧
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table table-sm">
+
+                    <form th:action="@{/admin/member-list}" th:object="${groupMember}" method="post" autocomplete="off" novalidate>
+                      <div class="form-row my-0">
+
+                        <div class="form-group col-3 my-0">
+                          <!-- <label for="groupId">グループ名：</label> -->
+                          <select class="form-control" id="groupId" name="groupId" th:errorclass="is-invalid">
+                            <option th:value=0 selected>【グループ名】を選択</option>
+                            <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}"
+                              th:value="${groupMap.key}"
+                              th:text="${groupMap.value}"
+                              th:selected="${groupMap.key == selectedGroup}"> 
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="form-group col-3 my-0">
+                          <!-- <label for="familyName">名前 (姓)：</label> -->
+                          <input type="text" class="form-control" th:field="*{familyName}" placeholder="【姓】のみ入力">
+                        </div>
+
+                        <div class="form-group col-3 my-0">
+                          <button class="btn btn-dark btn-icon-split">検索</button>              
+                        </div>
+
+                      </div>
+                    </form>
+                    <hr>
+                    <div th:if="${groupMembers.size() == 0}">
+                      該当データがありません
+                    </div>
+                  
+                    <table class="table table-bordered table-sm table-hover" th:if="${groupMembers.size() > 0}" style="table-layout:fixed;">
+                      <thead>
+                        <tr>
+                          <th class="small text-center">#</th>
+                          <th class="text-center">社員番号</th>
+                          <th class="text-center" >グループ</th>
+                          <th class="text-center" >名前 (姓・名) </th>
+                          <th class="text-center" >表示/非表示</th>
+                          <th class="text-center" >表示順</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="member, stat : ${groupMembers}"
+                          th:object="${member}">
+                          <td class="small text-center align-middle" th:text="${stat.count}"></td>
+                          <td class="text-center align-middle" th:text="*{memberId}"></td>
+                          <td class="text-center align-middle" th:text="${pullDownContentService.findGroupName(member.groupId)}"></td>
+                          <td class="text-center align-middle" th:text="*{familyName} + ' ' + *{firstName}"></td>
+                          <td class="text-center align-middle" th:text="${pullDownContentService.prepareDisplayMap().get(member.displayFlag)}"></td>
+                          <td class="text-center align-middle" th:text="*{displayOrder}"></td>
+                          <td class="text-center align-middle">
+                            <a th:href="@{/edit-member/{id}(id=*{id})}"
+                              class="btn btn-primary btn-icon-split py-1">
+                              <span class="text">更新</span>
+                            </a>
+                          
+                            <a th:href="@{/delete-member/{id}(id=*{id})}"
+                              class="btn btn-danger btn-icon-split py-1" onClick="return disp()">
+                              <span class="text">削除</span>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="font-weight-bolder">
+                    <a th:href="@{/schedule}">戻る</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Main -->
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+   
+</body>
+</html>

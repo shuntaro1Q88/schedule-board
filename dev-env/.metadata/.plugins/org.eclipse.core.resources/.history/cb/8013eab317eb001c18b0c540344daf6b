@@ -1,0 +1,64 @@
+package com.shunproduct.scheduleboard.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.shunproduct.scheduleboard.entity.GroupMember;
+import com.shunproduct.scheduleboard.entity.SiteUser;
+import com.shunproduct.scheduleboard.repository.GroupMemberRepository;
+import com.shunproduct.scheduleboard.repository.SiteUserRepository;
+import com.shunproduct.scheduleboard.service.PullDownContentService;
+import com.shunproduct.scheduleboard.util.Role;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Controller
+public class ManageGroupMemberController {
+	
+	private final PullDownContentService pullDownContentService;
+	private final GroupMemberRepository groupMemberRepository;
+	
+	@GetMapping("/admin/memeber-list")
+	public String groupMemberList(@ModelAttribute("groupMember") GroupMember groupMember, Model model) {
+
+		// 表示データを抽出するためのプルダウン
+		model.addAttribute("pullDownContentService", pullDownContentService);
+		// 表示データ
+		model.addAttribute("siteUsers", groupMemberRepository.findAll());
+
+		return "memeber-list";
+	}
+	
+	@PostMapping("/admin/memeber-list")
+	private String filteredSiteUserList(@ModelAttribute("groupMember") GroupMember groupMember, Model model) {
+
+		return "memeber-list";
+	}
+	
+	@GetMapping("/edit-member/{id}")
+	public String editEmployee(@PathVariable Long id, Model model) {
+		
+		return "member-edit-form";
+	}
+	
+	@PostMapping("/update-member")
+	public String update(@ModelAttribute GroupMember groupMember, BindingResult result, Model model) {
+		
+		return "redirect:/admin/member-list";
+	}
+	
+	@GetMapping("/delete-member/{id}")
+	public String deleteSiteuser(@PathVariable Long id) {
+		
+		groupMemberRepository.deleteById(id);
+		
+		return "redirect:/admin/member-list";
+	}
+
+}
