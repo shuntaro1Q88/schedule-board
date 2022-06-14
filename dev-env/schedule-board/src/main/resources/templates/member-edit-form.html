@@ -21,8 +21,12 @@
             </div>
             <div class="card-body">
               <div class="table">
-                <form th:action="@{/update-member}" th:object="${groupMember}"
-                  method="post">
+
+                <div class="alert alert-danger" th:if="${param.error}">
+                  <small>入力情報が不正です</small>
+                </div>
+
+                <form th:action="@{/update-member/{id}(id=*{id})}" th:object="${groupMember}" method="post">
                   
                   <input type="hidden" th:field="*{id}">
                   <!-- 編集時はグループ名を編集不可とするため、groupIdをhiddenで送る -->
@@ -32,7 +36,7 @@
 
                   <div class="form-row">
                     <div class="form-group col-4 my-1">
-                      <label for="memberId">社員番号</label>
+                      <label for="memberId" class="mx-1 my-0">社員番号</label>
                       <input type="text" class="form-control"
                         th:errorclass="is-invalid" th:field="*{memberId}" placeholder="社員番号 (6桁)" th:readonly="${editControl}">
                       <div class="invalid-feedback" th:errors="*{memberId}">
@@ -40,7 +44,7 @@
                     </div>
 
                     <div class="form-group col-4 my-1">
-                      <label for="familyName">姓</label>
+                      <label for="familyName" class="mx-1 my-0">姓</label>
                       <input type="text" class="form-control"
                         th:errorclass="is-invalid" th:field="*{familyName}">
                       <div class="invalid-feedback" th:errors="*{familyName}">
@@ -48,7 +52,7 @@
                     </div>
 
                     <div class="form-group col-4 my-1">
-                      <label for="firstName">名</label>
+                      <label for="firstName" class="mx-1 my-0">名</label>
                       <input type="text" class="form-control"
                         th:errorclass="is-invalid" th:field="*{firstName}">
                       <div class="invalid-feedback" th:errors="*{firstName}">
@@ -58,7 +62,7 @@
 
                   <div class="form-row">
                     <div class="form-group col-4 my-1">
-                      <label for="groupId">所属グループ</label>
+                      <label for="groupId" class="mx-1 my-0">所属グループ</label>
                       <select class="form-control" id="groupId" name="groupId" th:errorclass="is-invalid" th:disabled="${editControl}">
                         <option th:hidden disabled selected>選択してください</option>
                         <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}"
@@ -70,8 +74,8 @@
                       <div class="invalid-feedback" th:errors="*{groupId}">
                       </div>
                     </div>
-                    <div class="form-group col-3 my-1">
-                      <label for="displayFlag">表示/非表示</label>
+                    <div class="form-group col-4 my-1">
+                      <label for="displayFlag" class="mx-1 my-0">表示/非表示</label>
                       <select class="form-control" id="displayFlag" name="displayFlag" th:errorclass="is-invalid">
                         <option th:hidden disabled selected>選択してください</option>
                         <option th:each="displayFlagMap : ${pullDownContentService.prepareDisplayMap()}" 
@@ -84,8 +88,8 @@
                       </div>
                     </div>
 
-                    <div class="form-group col-2 my-1">
-                      <label for="displayOrder">表示順</label>
+                    <div class="form-group col-4 my-1">
+                      <label for="displayOrder" class="mx-1 my-0">表示順</label>
                       <input type="text" class="form-control"
                         th:errorclass="is-invalid" th:field="*{displayOrder}">
                       <div class="invalid-feedback" th:errors="*{displayOrder}">
@@ -95,7 +99,7 @@
 
                   <div class="form-row">
                     <div class="form-group col-12 my-1">
-                      <label for="memo">メモ</label>
+                      <label for="memo" class="mx-1 my-0">メモ</label>
                       <textarea class="form-control" id="memo" th:errorclass="is-invalid" th:field="*{memo}" rows="2"></textarea>
                       <div class="invalid-feedback" th:errors="*{memo}">
                       </div>
@@ -109,7 +113,7 @@
                     <span class="text">保存</span>
                   </button>
                 </form>
-                <a class="btn btn-white btn-outline-secondary btn-block my-2" th:href="@{/admin/employee-list}" role="button">戻る</a>
+                <a class="btn btn-white btn-outline-secondary btn-block my-2" th:href="@{/admin/member-list}" role="button">戻る</a>
               </div>
             </div>
           </div>

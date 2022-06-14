@@ -21,7 +21,7 @@
     }  
   </script>
   
-  <title>行動表示板 メンバー一覧</title>
+  <title>行動表示板 表示メンバー管理</title>
 </head>
 <body>
     <!-- Main -->
@@ -34,7 +34,7 @@
               <div class="card shadow my-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                   メンバー一覧
+                   表示メンバー管理
                   </h6>
                 </div>
                 <div class="card-body">
@@ -47,6 +47,7 @@
                           <!-- <label for="groupId">グループ名：</label> -->
                           <select class="form-control" id="groupId" name="groupId" th:errorclass="is-invalid">
                             <option th:value=0 selected>【グループ名】を選択</option>
+                            <!-- <option th:hidden disabled selected>【グループ名】を選択</option> -->
                             <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}"
                               th:value="${groupMap.key}"
                               th:text="${groupMap.value}"
@@ -64,6 +65,10 @@
                           <button class="btn btn-dark btn-icon-split">検索</button>              
                         </div>
 
+                        <div class="form-group col-3 my-0 text-right">
+                          <a class="btn btn-outline-primary" th:href="@{/register-member}" role="button">表示メンバー新規登録</a>
+                        </div>
+
                       </div>
                     </form>
                     <hr>
@@ -74,12 +79,12 @@
                     <table class="table table-bordered table-sm table-hover" th:if="${groupMembers.size() > 0}" style="table-layout:fixed;">
                       <thead>
                         <tr>
-                          <th class="small text-center">#</th>
+                          <th class="text-center" style="width:3.0rem;">#</th>
                           <th class="text-center">社員番号</th>
-                          <th class="text-center" >グループ</th>
+                          <th class="text-center" >グループ名</th>
                           <th class="text-center" >名前 (姓・名) </th>
                           <th class="text-center" >表示/非表示</th>
-                          <th class="text-center" >表示順</th>
+                          <th class="text-center" style="width:6.0rem;">表示順</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -94,12 +99,12 @@
                           <td class="text-center align-middle" th:text="*{displayOrder}"></td>
                           <td class="text-center align-middle">
                             <a th:href="@{/edit-member/{id}(id=*{id})}"
-                              class="btn btn-primary btn-icon-split py-1">
+                              class="btn btn-primary btn-sm py-1">
                               <span class="text">更新</span>
                             </a>
                           
                             <a th:href="@{/delete-member/{id}(id=*{id})}"
-                              class="btn btn-danger btn-icon-split py-1" onClick="return disp()">
+                              class="btn btn-danger btn-sm py-1" onClick="return disp()">
                               <span class="text">削除</span>
                             </a>
                           </td>

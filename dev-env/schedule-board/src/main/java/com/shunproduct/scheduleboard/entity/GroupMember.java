@@ -3,8 +3,10 @@ package com.shunproduct.scheduleboard.entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -22,13 +24,12 @@ public class GroupMember {
 	// 社員番号
 	@Column("member_id")
 	@NotBlank
-	@Pattern(regexp = "[0-9-]{6}")
+	@Pattern(regexp = "[0-9-]{6}", message="半角数字6桁で入力してください")
 	private String memberId;
 
 	// 所属
 	@Column("group_id")
-	@Min(1)
-	@Max(99)
+	@Range(min=1,max=99, message="選択してください")
 	private int groupId;
 
 	// 姓
@@ -43,11 +44,12 @@ public class GroupMember {
 
 	// 表示フラグ
 	@Column("display_flag")
+	@NotNull(message="選択してください")
 	private Boolean displayFlag;
 
 	// 表示順
 	@Column("display_order")
-	@Min(0)
+	@Min(1)
 	@Max(999)
 	private int displayOrder;
 

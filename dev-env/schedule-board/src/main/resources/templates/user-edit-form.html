@@ -15,13 +15,15 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-7 col-md-8">
+
               <!-- DataTales -->
               <div class="card shadow my-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
+                  <h6 class="m-0 font-weight-bold text-dark">
                     ユーザ情報変更
                   </h6>
                 </div>
+                
                 <div class="card-body">
                   <div class="table-responsive">
                     <form th:action="@{/update-user}" th:object="${siteUser}"
@@ -83,10 +85,9 @@
                       </div>
                     
                       <!-- Divider -->
-                      <hr class="sidebar-divider my-4">
+                      <hr class="sidebar-divider my-2">
                     
-                      <button class="btn btn-primary btn-block mb-3">
-                        <i class="fas fa-edit fa-fw"></i>
+                      <button class="btn btn-dark btn-user btn-block mb-3">
                         <span class="text">更新</span>
                       </button>
                     </form>

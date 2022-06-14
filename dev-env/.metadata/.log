@@ -1673,3 +1673,150 @@ java.util.concurrent.TimeoutException
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 00:49:45.887
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.urWEaHYk => OK
+!SESSION 2022-06-14 20:35:14.488 -----------------------------------------------
+eclipse.buildId=4.14.0.202203131612
+java.version=17.0.2
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ja_JP
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:25.892
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:25.897
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@6c1f0179[org.springframework.tooling.boot.ls:1.32.0.202203131529(id=619)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:25.903
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:26.000
+!MESSAGE Instantiating ReusableClasspathListenerHandler
+
+!ENTRY org.eclipse.egit.ui 2 0 2022-06-14 20:35:26.561
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\mtkws'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.001
+!MESSAGE 起動から初期化までの Boot LS 起動時間: 3094ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.073
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.TxmAdWTDisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.075
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.076
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.076
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.077
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.TxmAdWTD => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.077
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.091
+!MESSAGE classpath=103 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.093
+!MESSAGE buffering callback sts4.classpath.TxmAdWTD schedule-board false 103
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.093
+!MESSAGE executing callback sts4.classpath.TxmAdWTD 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:35:29.784
+!MESSAGE executing callback sts4.classpath.TxmAdWTD SUCCESS [done]
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-06-14 20:38:50.918
+!MESSAGE Using unsafe http transport to retrieve http://download.eclipse.org/usssdk/updates/release/latest, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-06-14 20:38:53.282
+!MESSAGE Using unsafe http transport to retrieve http://download.eclipse.org/usssdk/drops/release/1.2.2/content.xml.xz, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:43:59.082
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.TxmAdWTD
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:43:59.083
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.TxmAdWTD
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:43:59.083
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:43:59.084
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.TxmAdWTD => OK
+
+!ENTRY org.eclipse.ui 2 2 2022-06-14 20:44:02.242
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:38.840
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:38.840
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@6c1f0179[org.springframework.tooling.boot.ls:1.32.0.202203131529(id=619)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:38.841
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.526
+!MESSAGE 起動から初期化までの Boot LS 起動時間: 2684ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.575
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.pLPQrZPHisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.576
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.576
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.576
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.576
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.pLPQrZPH => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.577
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.580
+!MESSAGE classpath=103 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.583
+!MESSAGE buffering callback sts4.classpath.pLPQrZPH schedule-board false 103
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:41.584
+!MESSAGE executing callback sts4.classpath.pLPQrZPH 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-14 20:45:42.911
+!MESSAGE executing callback sts4.classpath.pLPQrZPH SUCCESS [done]
+
+!ENTRY org.eclipse.lsp4e 4 0 2022-06-14 22:27:12.926
+!MESSAGE [Error]	TypeError: Cannot read properties of undefined (reading 'filter')
+    at Object.filterInvalidCustomTags (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\utils\arrUtils.js:58:23)
+    at Object.getCustomTags (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\parser\custom-tag-provider.js:51:37)
+    at Object.parse (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\parser\yamlParser07.js:26:43)
+    at YamlDocuments.ensureCache (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\parser\yaml-documents.js:201:40)
+    at YamlDocuments.getYamlDocument (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\parser\yaml-documents.js:179:14)
+    at YAMLValidation.<anonymous> (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\services\yamlValidation.js:60:74)
+    at Generator.next (<anonymous>)
+    at C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\services\yamlValidation.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\sts-4.14.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.20.202202041634\node_modules\yaml-language-server\out\server\src\languageservice\services\yamlValidation.js:9:12)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-15 01:31:30.490
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.pLPQrZPH
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-15 01:31:30.490
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.pLPQrZPH
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-15 01:31:30.490
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-15 01:31:30.490
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.pLPQrZPH => OK

@@ -21,7 +21,7 @@
     }  
   </script>
   
-  <title>行動表示板 ユーザ一覧</title>
+  <title>行動表示板 ユーザ管理</title>
 </head>
 <body>
     <!-- Main -->
@@ -34,7 +34,7 @@
               <div class="card shadow my-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                   ユーザ一覧
+                   ユーザ管理
                   </h6>
                 </div>
                 <div class="card-body">
@@ -74,11 +74,11 @@
                     <table class="table table-bordered table-sm table-hover" th:if="${siteUsers.size() > 0}" style="table-layout:fixed;">
                       <thead>
                         <tr>
-                          <th class="small text-center">#</th>
+                          <th class="small text-center" style="width:3.0rem;">#</th>
                           <th class="text-center">社員番号</th>
-                          <th class="text-center" >グループ</th>
+                          <th class="text-center" >グループ名</th>
                           <th class="text-center" >名前 (姓・名) </th>
-                          <th class="text-center" >権限</th>
+                          <th class="text-center" style="width:6.0rem;">権限</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -92,12 +92,12 @@
                           <td class="text-center align-middle" th:text="*{role}"></td>
                           <td class="text-center align-middle">
                             <a th:href="@{/edit-user/{id}(id=*{id})}"
-                              class="btn btn-primary btn-icon-split py-1">
+                              class="btn btn-primary btn-sm py-1">
                               <span class="text">更新</span>
                             </a>
                           
                             <a th:href="@{/delete/{id}(id=*{id})}"
-                              class="btn btn-danger btn-icon-split py-1" onClick="return disp()">
+                              class="btn btn-danger btn-sm py-1" onClick="return disp()">
                               <span class="text">削除</span>
                             </a>
                           </td>
