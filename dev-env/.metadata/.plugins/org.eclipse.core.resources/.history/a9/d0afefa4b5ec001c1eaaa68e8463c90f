@@ -1,35 +1,33 @@
 package com.shunproduct.scheduleboard.entity;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.shunproduct.scheduleboard.validator.UniqueLogin;
-
 import lombok.Data;
 
-@Table("site_users")
+@Table("group_members")
 @Data
-public class SiteUser {
-	
+public class GroupMember {
+
 	@Column("id")
 	@Id
 	private Long id;
 
-	// 社員番号(6桁)
-	@Column("user_id")
+	// 社員番号
+	@Column("member_id")
 	@NotBlank
 	@Pattern(regexp = "[0-9-]{6}", message="半角数字6桁で入力してください")
-	@UniqueLogin // 自作バリデーション
-	private String username;
+	private String memberId;
 
-	// グループID
-	// 選択していない状態 = 0 を不可とする
+	// 所属
 	@Column("group_id")
 	@Range(min=1,max=99, message="選択してください")
 	private int groupId;
@@ -44,13 +42,19 @@ public class SiteUser {
 	@NotBlank
 	private String firstName;
 
-	// パスワード
-	@Column("password")
-	@Size(min = 8, max = 16, message="8～16文字で設定してください")
-	private String password;
+	// 表示フラグ
+	@Column("display_flag")
+	@NotNull(message="選択してください")
+	private Boolean displayFlag;
 
-	// 権限
-	@Column("role")
-	private String role;
+	// 表示順
+	@Column("display_order")
+	@Min(1)
+	@Max(999)
+	private int displayOrder;
+
+	// メモ
+	@Column("memo")
+	private String memo;
 
 }

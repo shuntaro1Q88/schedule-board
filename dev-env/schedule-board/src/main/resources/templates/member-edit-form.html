@@ -26,7 +26,7 @@
                   <small>入力情報が不正です</small>
                 </div>
 
-                <form th:action="@{/update-member/{id}(id=*{id})}" th:object="${groupMember}" method="post">
+                <form th:action="@{/update-member/{id}(id=*{id})}" th:object="${groupMember}" method="post" autocomplete="off">
                   
                   <input type="hidden" th:field="*{id}">
                   <!-- 編集時はグループ名を編集不可とするため、groupIdをhiddenで送る -->

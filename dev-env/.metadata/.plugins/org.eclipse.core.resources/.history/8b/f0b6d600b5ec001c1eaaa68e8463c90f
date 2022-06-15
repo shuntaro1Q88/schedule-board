@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.shunproduct.scheduleboard.entity.Group;
 
-public interface GroupRepository extends PagingAndSortingRepository<Group, Integer> {
+public interface GroupRepository extends PagingAndSortingRepository<Group, Long> {
 	
 	// グループ名選択のプルダウンで使用
 	List<Group> findByDisplayFlagIsTrueOrderByDisplayOrderAsc();
