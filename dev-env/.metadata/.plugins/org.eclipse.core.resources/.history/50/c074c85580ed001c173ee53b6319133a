@@ -1,0 +1,13 @@
+package com.shunproduct.scheduleboard.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import lombok.RequiredArgsConstructor;
+
+@SessionAttributes("displayParam")
+@RequiredArgsConstructor
+@Controller
+public class ScheduleController {
+
+}

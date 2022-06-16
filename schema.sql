@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS schedules(
 );
 CREATE trigger update_tri BEFORE UPDATE ON schedules for each ROW EXECUTE PROCEDURE set_timestamp();
 
-/* holidaysテーブル作成 */
-CREATE TABLE IF NOT EXISTS holidays(
+/* company_holidaysテーブル作成 */
+CREATE TABLE IF NOT EXISTS company_holidays(
   id SERIAL
   ,calendar_date DATE
   ,dow_index INTEGER
@@ -133,12 +133,12 @@ CREATE TABLE IF NOT EXISTS holidays(
   ,updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   ,PRIMARY KEY (calendar_date)
 );
-CREATE trigger update_tri BEFORE UPDATE ON holidays for each ROW EXECUTE PROCEDURE set_timestamp();
+CREATE trigger update_tri BEFORE UPDATE ON company_holidays for each ROW EXECUTE PROCEDURE set_timestamp();
 
-/* calendarsテーブル作成
-   holidaysテーブル作成後に実行
+/* company_calendarsテーブル作成
+   company_holidaysテーブル作成後に実行
    明示的に'2022-04-01'以降のカレンダーとしている */
-CREATE TABLE IF NOT EXISTS calendars AS(
+CREATE TABLE IF NOT EXISTS company_calendars AS(
   WITH calendar_tb AS(
     SELECT
     GENERATE_SERIES('2022-04-01', CURRENT_DATE+365*10, '1 day')::DATE AS calendar_date
@@ -146,11 +146,11 @@ CREATE TABLE IF NOT EXISTS calendars AS(
   )
   SELECT
     calendar_tb.calendar_date
-    ,CASE WHEN holidays.dow_index ISNULL THEN calendar_tb.dow_index
-      ELSE holidays.dow_index END AS dow_index
+    ,CASE WHEN company_holidays.dow_index ISNULL THEN calendar_tb.dow_index
+      ELSE company_holidays.dow_index END AS dow_index
   FROM calendar_tb
-  LEFT JOIN holidays ON
-    calendar_tb.calendar_date = holidays.calendar_date
+  LEFT JOIN company_holidays ON
+    calendar_tb.calendar_date = company_holidays.calendar_date
   ORDER BY calendar_tb.calendar_date
 );
 
@@ -164,23 +164,23 @@ INSERT INTO schedule_categories(category_id,category_name,category_bg_color,disp
 INSERT INTO site_users(user_id,group_id,family_name,first_name,password,role) VALUES('123123',1,'test','user','password','ADMIN');
 INSERT INTO group_members(member_id,group_id,family_name,first_name,display_flag,display_order) VALUES('123123',1,'test','user',TRUE,1);
 
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-05-02',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-05-03',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-05-04',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-05-05',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-05-06',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-08-15',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-08-16',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-08-17',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-08-18',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-08-19',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-12-29',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2022-12-30',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2023-01-02',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2023-01-03',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2023-01-04',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2023-01-05',7);
-INSERT INTO holidays(calendar_date,dow_index) VALUES('2023-01-06',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-05-02',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-05-03',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-05-04',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-05-05',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-05-06',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-08-15',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-08-16',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-08-17',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-08-18',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-08-19',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-12-29',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2022-12-30',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-02',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-03',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-04',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-05',7);
+INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-06',7);
 
 INSERT INTO schedule_statuses(status_id,status_symbol,status_name,display_flag,display_order) VALUES(1,'★','確定',TRUE,1);
 INSERT INTO schedule_statuses(status_id,status_symbol,status_name,display_flag,display_order) VALUES(2,'☆','未定',TRUE,2);

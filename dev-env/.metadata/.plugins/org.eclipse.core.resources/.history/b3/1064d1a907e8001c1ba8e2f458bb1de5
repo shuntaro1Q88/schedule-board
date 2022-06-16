@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.entity;
-
-@Table("holidays")
-@Data
-public class Holidays {
-
-}
