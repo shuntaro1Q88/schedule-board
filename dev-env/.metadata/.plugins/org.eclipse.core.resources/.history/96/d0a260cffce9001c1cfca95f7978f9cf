@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.service;
-
-@RequiredArgsConstructor
-@Service
-public class PullDownContentService {
-
-}

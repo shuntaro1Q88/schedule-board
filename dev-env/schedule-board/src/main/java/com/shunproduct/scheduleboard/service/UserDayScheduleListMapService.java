@@ -22,10 +22,8 @@ public class UserDayScheduleListMapService {
 	
 	private final GroupMemberRepository groupMemberRepository;
 	private final ScheduleRepository scheduleRepository;
-	private final PullDownContentService pullDownContentService;
 
-	public Map<String, Map<String, List<Schedule>>> prepareUserDayScheduleListMap(int groupId,
-			String startDate, String displayTerm) {
+	public Map<String, Map<String, List<Schedule>>> prepareUserDayScheduleListMap(int groupId, String startDate, int displayTerm) {
 
 		Map<String, Map<String, List<Schedule>>> userDayScheduleListMap = new LinkedHashMap<>();
 
@@ -34,19 +32,19 @@ public class UserDayScheduleListMapService {
 
 		// 表示する期間の設定
 		LocalDate ldStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		LocalDate ldEndDate = ldStartDate.plusDays(Integer.parseInt(displayTerm));
+		LocalDate ldEndDate = ldStartDate.plusDays(displayTerm);
 
 		List<String> displayDateList = new ArrayList<String>();
 		displayDateList.add(null);
 
-		for (int i = 0; i < Integer.parseInt(displayTerm); i++) {
+		for (int i = 0; i < displayTerm; i++) {
 			displayDateList.add(ldStartDate.plusDays(i).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		}
 
 		// 指定したグループカテゴリ名と期間に存在するスケジュールを取得
-		List<Schedule> allScheduleList = scheduleRepository.findAllByGroupCategoryIdAndWorkedOnBetween(groupCategoryId, ldStartDate, ldEndDate);
+		List<Schedule> allScheduleList = scheduleRepository.findByGroupIdAndMainDateBetween(groupId, ldStartDate, ldEndDate);
 
-		for (int i = 0; i < employeeList.size(); i++) {
+		for (int i = 0; i < groupMemberList.size(); i++) {
 
 			Map<String, List<Schedule>> dayScheduleListMap = new LinkedHashMap<>();
 
@@ -60,8 +58,8 @@ public class UserDayScheduleListMapService {
 				for (int k = 0; k < allScheduleList.size(); k++) {
 
 					// System.out.println(scheduleList.get(k).getWorkedOn());
-					if (employeeList.get(i).getEmployeeId().equals(allScheduleList.get(k).getEmployeeId())
-							&& displayDateList.get(j).equals(allScheduleList.get(k).getWorkedOn().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))) {
+					if (groupMemberList.get(i).getMemberId().equals(allScheduleList.get(k).getMemberId())
+							&& displayDateList.get(j).equals(allScheduleList.get(k).getMainDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))) {
 
 						scheduleList.add(allScheduleList.get(k));
 						// System.out.println("既存予定の数" + testUserDayScheduleList.size());
@@ -76,11 +74,11 @@ public class UserDayScheduleListMapService {
 
 					Schedule schedule = new Schedule();
 					
-					schedule.setGroupId(employeeList.get(i).getGroupId());
-					schedule.setEmployeeId(employeeList.get(i).getEmployeeId());
-					schedule.setWorkedOn(LocalDate.parse(displayDateList.get(j), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-					schedule.setScheduleSubject("");
-					schedule.setWorkCategoryId(0);
+					schedule.setGroupId(groupMemberList.get(i).getGroupId());
+					schedule.setMemberId(groupMemberList.get(i).getMemberId());
+					schedule.setMainDate(LocalDate.parse(displayDateList.get(j), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+					schedule.setSubjectLine("");
+					schedule.setCategoryId(0);
 
 					scheduleList.add(schedule);
 
@@ -89,8 +87,8 @@ public class UserDayScheduleListMapService {
 				dayScheduleListMap.put(displayDateList.get(j), scheduleList);
 
 			}
-			userDayScheduleListMap.put(employeeList.get(i).getEmployeeId() + "_" + employeeList.get(i).getFamilyName()
-					+ " " + employeeList.get(i).getFirstName(), dayScheduleListMap);
+			userDayScheduleListMap.put(groupMemberList.get(i).getMemberId() + "_" + groupMemberList.get(i).getFamilyName()
+					+ " " + groupMemberList.get(i).getFirstName(), dayScheduleListMap);
 		}
 
 		return userDayScheduleListMap;

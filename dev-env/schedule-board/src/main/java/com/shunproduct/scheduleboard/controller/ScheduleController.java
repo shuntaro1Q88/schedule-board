@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.shunproduct.scheduleboard.entity.Schedule;
 import com.shunproduct.scheduleboard.entity.ScheduleDisplayParam;
 import com.shunproduct.scheduleboard.entity.SiteUser;
 import com.shunproduct.scheduleboard.repository.CompanyCalendarRepository;
 import com.shunproduct.scheduleboard.repository.SiteUserRepository;
+import com.shunproduct.scheduleboard.service.PullDownContentService;
+import com.shunproduct.scheduleboard.service.UserDayScheduleListMapService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +31,9 @@ public class ScheduleController {
 	
 	private final SiteUserRepository siteUserRepository;
 	private final CompanyCalendarRepository companyCalendarRepository;
+	private final UserDayScheduleListMapService userDayScheduleListMapService;
+	private final PullDownContentService pullDownContentService;
+	
 	
 	@GetMapping("/schedule")
 	public String displaySchedule(Authentication loginUser, ScheduleDisplayParam scheduleDisplayParam,
@@ -58,16 +65,15 @@ public class ScheduleController {
 		model.addAttribute("displayDateList", dayOfWeekInfoList);
 
 		// スケジュール画面に渡すスケジュールマップを取得
-		Map<String, Map<String, List<Schedule>>> userDayScheduleListMap
-		= prepareUserDayScheduleListMap.prepareUserDayScheduleListMap(Integer.parseInt(groupCategoryId), startDate, displayTerm);
+		Map<String, Map<String, List<Schedule>>> userDayScheduleListMap = userDayScheduleListMapService.prepareUserDayScheduleListMap(groupId, startDate, displayTerm);
 		// viewに渡す
 		model.addAttribute("userDayScheduleListMap", userDayScheduleListMap);
 		
 		// viewに渡す
-		model.addAttribute("loginId", loginId);
-		model.addAttribute("role", userRepository.findByUsername(loginId).getRole());
-		model.addAttribute("viewContentService", viewContentService);
-		model.addAttribute("workCategoryBgColorMap", viewStyleService.getWorkCategoryBgColorMap());
+		model.addAttribute("loginId", principal.getName()); // パスワード変更画面遷移のため
+		model.addAttribute("role", siteUserRepository.findByUsername(principal.getName()).getRole()); // 権限設定のありページ表示のため role==管理の場合、管理者権限用ページを表示する
+		model.addAttribute("pullDownContentService", pullDownContentService); // 画面上部条件変更用プルダウン、
+//		model.addAttribute("workCategoryBgColorMap", viewStyleService.getWorkCategoryBgColorMap());
 
 		return "schedule/schedule";
 

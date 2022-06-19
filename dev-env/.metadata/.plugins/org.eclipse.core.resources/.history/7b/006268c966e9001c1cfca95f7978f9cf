@@ -1,5 +1,0 @@
-package com.shunproduct.scheduleboard.config;
-
-public class SecurityConfig {
-
-}

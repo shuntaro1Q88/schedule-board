@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.repository;
-
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-public interface SiteUserRepository extends PagingAndSortingRepository<T, ID> {
-
-}

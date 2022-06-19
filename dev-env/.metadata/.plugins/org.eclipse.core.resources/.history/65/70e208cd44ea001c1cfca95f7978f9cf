@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.controller;
-
-@RequiredArgsConstructor
-@Controller
-public class ShowSiteUserController {
-
-}
