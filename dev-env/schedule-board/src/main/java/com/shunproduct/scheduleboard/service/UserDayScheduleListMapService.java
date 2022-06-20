@@ -23,26 +23,26 @@ public class UserDayScheduleListMapService {
 	private final GroupMemberRepository groupMemberRepository;
 	private final ScheduleRepository scheduleRepository;
 
-	public Map<String, Map<String, List<Schedule>>> prepareUserDayScheduleListMap(int groupId, String startDate, int displayTerm) {
+	public Map<String, Map<String, List<Schedule>>> prepareUserDayScheduleListMap(String groupId, String startDate, String displayTerm) {
 
 		Map<String, Map<String, List<Schedule>>> userDayScheduleListMap = new LinkedHashMap<>();
 
 		// 表示するメンバーのリストを取得
-		List<GroupMember> groupMemberList = groupMemberRepository.findByDisplayFlagIsTrueAndGroupIdOrderByDisplayOrder(groupId);
+		List<GroupMember> groupMemberList = groupMemberRepository.findByDisplayFlagIsTrueAndGroupIdOrderByDisplayOrder(Integer.parseInt(groupId));
 
 		// 表示する期間の設定
 		LocalDate ldStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		LocalDate ldEndDate = ldStartDate.plusDays(displayTerm);
+		LocalDate ldEndDate = ldStartDate.plusDays(Integer.parseInt(displayTerm));
 
 		List<String> displayDateList = new ArrayList<String>();
 		displayDateList.add(null);
 
-		for (int i = 0; i < displayTerm; i++) {
+		for (int i = 0; i < Integer.parseInt(displayTerm); i++) {
 			displayDateList.add(ldStartDate.plusDays(i).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		}
 
 		// 指定したグループカテゴリ名と期間に存在するスケジュールを取得
-		List<Schedule> allScheduleList = scheduleRepository.findByGroupIdAndMainDateBetween(groupId, ldStartDate, ldEndDate);
+		List<Schedule> allScheduleList = scheduleRepository.findByGroupIdAndMainDateBetween(Integer.parseInt(groupId), ldStartDate, ldEndDate);
 
 		for (int i = 0; i < groupMemberList.size(); i++) {
 

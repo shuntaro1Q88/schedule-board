@@ -18,7 +18,7 @@ public interface GroupMemberRepository extends PagingAndSortingRepository<GroupM
 	List<GroupMember> findAllByGroupIdAndFamilyNameContaining(int groupId, String familyName);
 	
 	// スケジュール表示に使用
-	@Query("SELECT * FROM group_memers\r\n"
+	@Query("SELECT * FROM group_members\r\n"
 			+ "WHERE display_flag is TRUE AND group_id =:groupId\r\n"
 			+ "-- WHERE display_flag is TRUE AND group_id = 1 -- デバッグ用\r\n"
 			+ "ORDER BY display_order")

@@ -35,28 +35,28 @@ public class ScheduleController {
 	private final PullDownContentService pullDownContentService;
 	
 	
-	@GetMapping("/schedule")
+	@GetMapping("/schedule-board")
 	public String displaySchedule(Authentication loginUser, ScheduleDisplayParam scheduleDisplayParam,
-			@RequestParam(required = false) int groupId, @RequestParam(required = false) String startDate, @RequestParam(required = false) int displayTerm,
+			@RequestParam(required = false) String groupId, @RequestParam(required = false) String startDate, @RequestParam(required = false) String displayTerm,
 			Model model, Principal principal)
 			throws UnsupportedEncodingException {
 		
 		SiteUser user = siteUserRepository.findByUsername(principal.getName());
 		
-		groupId = user.getGroupId();
+		groupId = String.valueOf(user.getGroupId());
 		startDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now());
-		displayTerm = 31;
+		displayTerm = "28";
 
 		// スケジュール表示画面のパラメータ情報をsessionに保存
-		scheduleDisplayParam.setId(groupId);
+		scheduleDisplayParam.setGroupId(Integer.parseInt(groupId));
 		scheduleDisplayParam.setStartDate(startDate);
-		scheduleDisplayParam.setDisplayTerm(displayTerm);
+		scheduleDisplayParam.setDisplayTerm(Integer.parseInt(displayTerm));
 		// viewに渡す
 		model.addAttribute("scheduleDisplayParam", scheduleDisplayParam);
 
 		// 表示する期間の設定
 		LocalDate ldStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		LocalDate ldEndDate = ldStartDate.plusDays(displayTerm);
+		LocalDate ldEndDate = ldStartDate.plusDays(Integer.parseInt(displayTerm));
 
 		// スケジュール画面1行目、日付用データ
 		List<String> dayOfWeekInfoList = companyCalendarRepository.findByMainDateBetween(ldStartDate, ldEndDate.minusDays(1));
@@ -75,7 +75,7 @@ public class ScheduleController {
 		model.addAttribute("pullDownContentService", pullDownContentService); // 画面上部条件変更用プルダウン、
 //		model.addAttribute("workCategoryBgColorMap", viewStyleService.getWorkCategoryBgColorMap());
 
-		return "schedule/schedule";
+		return "schedule-board";
 
 	}
 

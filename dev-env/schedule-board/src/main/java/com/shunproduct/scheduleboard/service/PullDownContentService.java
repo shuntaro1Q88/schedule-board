@@ -44,5 +44,16 @@ public class PullDownContentService {
 
 		return booleanMap;
 	}
+	
+	// 表示期間のプルダウンを準備
+	public Map<Integer, String> prepareDisplayTermMap() {
+
+		Map<Integer, String> displayTermMap = new LinkedHashMap<>();
+		displayTermMap.put(7, "7日間");
+		displayTermMap.put(14, "14日間");
+		displayTermMap.put(28, "28日間");
+
+		return displayTermMap;
+	}
 
 }

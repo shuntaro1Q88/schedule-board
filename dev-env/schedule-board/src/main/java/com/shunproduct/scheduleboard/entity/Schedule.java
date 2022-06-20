@@ -16,8 +16,8 @@ import lombok.Data;
 @Data
 public class Schedule {
 	
-	@Id
-	private Long schedule_id;
+	@Id@Column("schedule_id")
+	private Long scheduleId;
 
 	@Column("group_id")
 	private int groupId;

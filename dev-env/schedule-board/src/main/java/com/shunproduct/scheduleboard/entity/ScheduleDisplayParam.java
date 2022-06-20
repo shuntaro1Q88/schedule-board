@@ -9,7 +9,7 @@ public class ScheduleDisplayParam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int Id;
+	private int groupId;
 
 	private String startDate;
 

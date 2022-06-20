@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.util;
-
-public enum Boolean {
-	
-	TRUE,FALSE
-
-}
