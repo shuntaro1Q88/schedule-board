@@ -14,57 +14,64 @@
   <div class="container-fluid px-0">
 
     <nav class="navbar m-0 p-0">
-      <form class="form-inline" th:object="${scheduleDisplayParam}">
-        <span class="text-dark font-weight-bold mx-1 my-0">行動表示板</span>
-        
-        <!-- グループカテゴリのプルダウン -->
-        <select class="form-control form-control-sm mx-1 my-1 p-0" id="groupId" name="groupId" th:errorclass="is-invalid">
-          <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}" 
-            th:value="${groupMap.key}" 
-            th:text="${groupMap.value}"
-            th:selected="${groupMap.key == scheduleDisplayParam.getGroupId()}">
-          </option>
-        </select>
-        
-        <!-- 表示開始日 -->
-        <input type="date" th:value="${scheduleDisplayParam.getStartDate()}" class="form-control form-control-sm mx-1 my-1 p-0" name="startDate">
-  
-        <!-- 表示期間 -->
-        <select class="form-control form-control-sm mx-1 my-1 p-0" name="displayTerm" th:errorclass="is-invalid">
-          <option th:each="displayTermMap : ${pullDownContentService.prepareDisplayTermMap()}" 
-            th:value="${displayTermMap.key}" 
-            th:text="${displayTermMap.value}"
-            th:selected="${displayTermMap.key == scheduleDisplayParam.getDisplayTerm()}">
-          </option>
-        </select>
+      <form class="mr-auto" th:object="${scheduleDisplayParam}">
+        <div class="form-row align-items-center">
+          <div class="col-md-auto col-sm-12">
+            <span class="text-dark font-weight-bold mx-1 my-0">行動表示板</span>
+          </div>
+          
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- グループカテゴリのプルダウン -->
+            <select class="form-control form-control-sm mx-1 my-1 p-0" id="groupId" name="groupId" th:errorclass="is-invalid">
+              <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}" 
+                th:value="${groupMap.key}" 
+                th:text="${groupMap.value}"
+                th:selected="${groupMap.key == scheduleDisplayParam.getGroupId()}">
+              </option>
+            </select>
+          </div>
 
-        <button type="submit" class="btn btn-sm btn-info  mx-1 my-0">更新</button>
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- 表示開始日 -->
+            <input type="date" th:value="${scheduleDisplayParam.getStartDate()}" class="form-control form-control-sm mx-1 my-1 p-0" name="startDate">
+          </div>
+          
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- 表示期間 -->
+            <select class="form-control form-control-sm mx-1 my-1 p-0" name="displayTerm" th:errorclass="is-invalid">
+              <option th:each="displayTermMap : ${pullDownContentService.prepareDisplayTermMap()}" 
+                th:value="${displayTermMap.key}" 
+                th:text="${displayTermMap.value}"
+                th:selected="${displayTermMap.key == scheduleDisplayParam.getDisplayTerm()}">
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-auto col-sm-4 col-6">
+            <button type="submit" class="form-control form-control-sm btn btn-sm btn-info mx-1 my-0">更新</button>
+          </div>
+
+        </div>
       </form>
-
-      <form class="form-inline">
-        <div class="dropdown m-0 p-0">
-          <button type="button" id="dropdown1"
-            class="btn btn-sm btn-outline-secondary dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            各種設定
-          </button>
-          <div class="dropdown-menu dropdown-menu-left m-0 p-0" aria-labelledby="dropdown1">
-            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/edit-user-password} + '/' + ${loginId}">パスワード変更</a>
-            <div th:if="${role == '管理'}">
-              <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/user-list}">サイトユーザー管理</a>
-              <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/employee-list}">表示メンバー管理</a>
-              <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/data-export}">準備中_データ出力</a>
-              <a class="dropdown-item d-flex align-items-center px-2 py-0" href="@{#}">準備中_休日設定</a>
-            </div>
+      
+      <div class="dropdown m-0 p-0 ml-auto d-none d-md-block">
+        <button type="button" id="dropdown1" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          各種設定
+        </button>
+        <div class="dropdown-menu dropdown-menu-left m-0 p-0" aria-labelledby="dropdown1">
+          <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/edit-user-password} + '/' + ${loginId}">パスワード変更</a>
+          <div th:if="${role == '管理'}">
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/user-list}">サイトユーザー管理</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/employee-list}">表示メンバー管理</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/data-export}">準備中_データ出力</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" href="@{#}">準備中_休日設定</a>
           </div>
         </div>
-        <!-- <a class="btn btn-sm btn-warning font-weight-bolder my-0 mx-1" role="button" th:href="@{/logout}">ログアウト</a> -->
-      </form>
+      </div>
       <form method="post" th:action="@{/logout}">
-        <button class="btn btn-sm btn-warning font-weight-bolder my-0 mx-1" type="submit">ログアウト</button>
+        <button class="btn btn-sm btn-warning font-weight-bolder my-0 mx-1 d-none d-md-block">ログアウト</button>
       </form>
+
     </nav>
     
     <div class="table-responsive">
@@ -79,10 +86,10 @@
             <th:block th:each="date : ${displayDateList}">
               <th:block th:switch="${#strings.substringAfter(date,',')}">
                 <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:50px; "></th>
-                <th th:case="0" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white py-0" style="font-size: 0.75rem; background-color: #ffb6c1;"></th>
-                <th th:case="6" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white py-0" style="font-size: 0.75rem; background-color: #ffb6c1;"></th>
-                <th th:case="7" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white py-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
-                <th th:case="*" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white py-0" style="font-size: 0.75rem; background-color: #696969;"></th>
+                <th th:case="0" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="6" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="7" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="*" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #696969;"></th>
               </th:block>
             </th:block>
           </tr>

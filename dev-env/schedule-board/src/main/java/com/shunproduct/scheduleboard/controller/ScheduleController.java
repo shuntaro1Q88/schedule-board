@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -77,6 +78,28 @@ public class ScheduleController {
 
 		return "schedule-board";
 
+	}
+	
+	// 新規予定の追加
+	@GetMapping("/add-schedule/{groupId}/{memberId}/{mainDate}")
+	public String addNewSchedule(@PathVariable("groupId") String groupId, @PathVariable("memberId") String memberId, @PathVariable("mainDate") String mainDate, Model model, Principal principal) {
+
+		// 新規入力フォームの初期値の設定
+		Schedule schedule = new Schedule();
+		
+		schedule.setGroupId(Integer.parseInt(groupId));
+		schedule.setMemberId(memberId);
+		schedule.setAddMemberId1st(memberId);
+		schedule.setMainDate(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		schedule.setAddDate1st(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		schedule.setStatusId(0);
+
+		model.addAttribute("schedule", schedule);
+		model.addAttribute("pullDownContentService", pullDownContentService);
+
+
+
+		return "schedule-register-form";
 	}
 
 }
