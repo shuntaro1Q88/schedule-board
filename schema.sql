@@ -182,6 +182,7 @@ INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-04',7);
 INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-05',7);
 INSERT INTO company_holidays(calendar_date,dow_index) VALUES('2023-01-06',7);
 
+INSERT INTO schedule_statuses(status_id,status_symbol,status_name,display_flag,display_order) VALUES(0,'','未設定',TRUE,0);
 INSERT INTO schedule_statuses(status_id,status_symbol,status_name,display_flag,display_order) VALUES(1,'★','確定',TRUE,1);
 INSERT INTO schedule_statuses(status_id,status_symbol,status_name,display_flag,display_order) VALUES(2,'☆','未定',TRUE,2);
 

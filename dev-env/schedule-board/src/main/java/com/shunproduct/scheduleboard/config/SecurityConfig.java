@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .mvcMatchers("/login", "/user-register", "/error").permitAll()
                 .mvcMatchers("/admin/**").hasRole(Role.ADMIN.getRoleName())
                 .anyRequest().authenticated()
-        ).mvcMatcher("/add-schedule/**").headers().frameOptions().sameOrigin();
+        ).headers().frameOptions().sameOrigin();
         return http.build();
 	}
     

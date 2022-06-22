@@ -9,10 +9,10 @@
   <script type="text/javascript">
     // 作業区分と件名/客先名が入力済みの場合、submitボタンを有効化
     function check(){
-      var scheduleSubject = document.getElementById('scheduleSubject').value;
-      var workCategory = document.getElementById('workCategoryId').value;
+      var subjectLine = document.getElementById('subjectLine').value;
+      var categoryId = document.getElementById('categoryId').value;
 
-      if(scheduleSubject==="" || workCategory===""){
+      if(subjectLine==="" || categoryId===""){
         console.log("未入力アリ");
       }else{
         // submitボタンの有効化
@@ -29,28 +29,29 @@
       <div id="content">
         <div class="container-fluid px-0">
           <!-- DataTales -->
-          <div class="card shadow my-1">
-            <div class="card-body p-1">
+          <div class="card shadow my-0">
+            <div class="card-body px-1 py-0">
               <div class="table m-0">
                 <form th:action="@{/process-add-schedule}" th:object="${schedule}" name="schedule_form"
                   method="post" target="_parent" autocomplete="off" onsubmit="return false">
                   <input type="hidden" th:field="*{scheduleId}">
                   <input type="hidden" th:field="*{groupId}">
                   <input type="hidden" th:field="*{memberId}">
+                  <input type="hidden" th:field="*{mainDate}">
                   <input type="hidden" th:field="*{scheduleGroupId}">
                   <input type="hidden" th:field="*{createdBy}">
                   <input type="hidden" th:field="*{updatedBy}">
 
-                  <div th:if="${editControl}">
+                  <!-- <div th:if="${editControl}"> -->
                     <input type="hidden" th:field="*{statusId}">
                     <input type="hidden" th:field="*{categoryId}">
                     <input type="hidden" th:field="*{addMemberId1st}">
                     <input type="hidden" th:field="*{addMemberId2nd}">
                     <input type="hidden" th:field="*{addMemberId3rd}">
                     <input type="hidden" th:field="*{addMemberId4th}">
-                  </div>
+                  <!-- </div> -->
 
-                  <div class="form-row">
+                  <!-- <div class="form-row">
                     <div class="form-group col-6 my-0">
                       <label for="groupId" class="small font-weight-bolder mx-1 my-0">グループ名</label>
                       <select class="form-control form-control-sm" id="groupId" name="groupId" th:errorclass="is-invalid" disabled>
@@ -76,37 +77,24 @@
                       <div class="invalid-feedback" th:errors="*{memberId}">
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="form-row">
-                    <div class="form-group col-4 my-0">
+                    <!-- <div class="form-group col-4 my-0">
                       <label for="mainDate" class="small font-weight-bolder mx-1 my-0">作業日</label>
                       <input type="date" class="form-control form-control-sm" id="mainDate"
                         th:errorclass="is-invalid" th:field="*{mainDate}" readonly>
                       <div class="invalid-feedback" th:errors="*{mainDate}">
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group col-2 my-0">
-                      <label for="statusId" class="small font-weight-bolder mx-1 my-0">状態</label>
-                      <select class="form-control form-control-sm" id="statusId" name="statusId" th:errorclass="is-invalid" th:disabled="${editControl}">
-                        
-                        <option th:each="scheduleStatusMap : ${pullDownContentService.prepareScheduleStatusMap()}"
-                          th:value="${scheduleStatusMap.key}"
-                          th:text="${scheduleStatusMap.value}"
-                          th:selected="${scheduleStatusMap.key == schedule.getStatusId()}"> 
-                        </option>
-                      </select>
-                      <div class="invalid-feedback" th:errors="*{statusId}">
-                      </div>
-                    </div>
-
-                    <div class="form-group col-6 my-0">
-                      <label for="categoryId" class="small font-weight-bolder mx-1 my-0">作業区分
-                      <span class="badge badge-pill badge-danger m-0">必須</span>
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <span class="badge badge-pill badge-danger ml-1 mr-0 my-0">必須</span>
+                      <label for="categoryId" class="small font-weight-bolder m-0">作業区分
                       </label>
                       <select class="form-control form-control-sm" id="categoryId" name="categoryId" th:errorclass="is-invalid" th:disabled="${editControl}" required>
-                        <option value="">選択してください</option>
+                        <option th:hidden disabled selected>選択してください</option>
+                        <!-- <option value="">選択してください</option> -->
                         <option th:each="scheduleCategoryMap : ${pullDownContentService.prepareScheduleCategoryMap()}"
                           th:value="${scheduleCategoryMap.key}"
                           th:text="${scheduleCategoryMap.value}"
@@ -116,20 +104,36 @@
                       <div class="invalid-feedback" th:errors="*{categoryId}">
                       </div>
                     </div>
+
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <label for="statusId" class="small font-weight-bolder m-0">状態</label>
+                      <select class="form-control form-control-sm" id="statusId" name="statusId" th:errorclass="is-invalid" th:disabled="${editControl}">
+                        <!-- <option th:hidden disabled selected>選択してください</option> -->
+                        <option th:each="scheduleStatusMap : ${pullDownContentService.prepareScheduleStatusMap()}"
+                          th:value="${scheduleStatusMap.key}"
+                          th:text="${#strings.substringAfter(scheduleStatusMap.value,'-')}"
+                          th:selected="${scheduleStatusMap.key == schedule.getStatusId()}"> 
+                        </option>
+                      </select>
+                      <div class="invalid-feedback" th:errors="*{statusId}">
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-row">
-                    <div class="form-group col-6 my-0">
-                      <label for="subjectLine" class="small font-weight-bolder mx-1 my-0">件名/客先名
-                      <span class="badge badge-pill badge-danger m-0">必須</span>
+                    <div class="form-group col-12 mt-0 mb-1">
+                      <span class="badge badge-pill badge-danger ml-1 mr-0 my-0">必須</span>
+                      <label for="subjectLine" class="small font-weight-bolder m-0">件名
                       </label>
                       <input type="text" class="form-control form-control-sm" id="subjectLine"
                         th:errorclass="is-invalid" th:field="*{subjectLine}" th:readonly="${editControl}" required>
                       <div class="invalid-feedback" th:errors="*{subjectLine}">
                       </div>
                     </div>
+                  </div>
 
-                    <div class="form-group col-6 my-0">
+                  <div class="form-row">
+                    <div class="form-group col-12 mt-0 mb-1">
                       <label for="content" class="small font-weight-bolder mx-1 my-0">作業内容</label>
                       <textarea class="form-control form-control-sm" id="content"
                         th:errorclass="is-invalid" th:field="*{content}" th:readonly="${editControl}" rows="1"></textarea>
@@ -138,11 +142,11 @@
                     </div>
                   </div>
 
-                  <p class="small font-weight-bolder mx-1 my-0">作業者一覧
+                  <p class="small font-weight-bolder mx-1 mt-1 mb-0">作業者一覧
                   <span class="badge badge-light m-0" id="workerList">(※作業者一覧は、*社員名を含む、最大4人※)</span>
                   </p>
                   <div class="form-row">
-                    <div class="form-group col-auto my-0" style="width: 155px">
+                    <div class="form-group col-6 mt-0 mb-1">
                       <select class="form-control form-control-sm" id="addMemberId1st" name="addMemberId1st" th:errorclass="is-invalid" th:disabled="${editControl}">
                         <option th:each="groupMemberMap : ${pullDownContentService.prepareGroupMemberMap(groupId)}"
                           th:value="${groupMemberMap.key}"
@@ -153,7 +157,7 @@
                       <div class="invalid-feedback" th:errors="*{addMemberId1st}"></div>
                     </div>
 
-                    <div class="form-group col-auto my-0" style="width: 155px">
+                    <div class="form-group col-6 mt-0 mb-1">
                       <select class="form-control form-control-sm" id="addMemberId2nd" name="addMemberId2nd" th:errorclass="is-invalid" th:disabled="${editControl}">
                         <option th:each="groupMemberMap : ${pullDownContentService.prepareGroupMemberMap(groupId)}"
                           th:value="${groupMemberMap.key}"
@@ -164,7 +168,7 @@
                       <div class="invalid-feedback" th:errors="*{addMemberId2nd}"></div>
                     </div>
 
-                    <div class="form-group col-auto my-0" style="width: 155px">
+                    <div class="form-group col-6 mt-0 mb-1">
                       <select class="form-control form-control-sm" id="addMemberId3rd" name="addMemberId3rd" th:errorclass="is-invalid" th:disabled="${editControl}">
                         <option th:each="groupMemberMap : ${pullDownContentService.prepareGroupMemberMap(groupId)}"
                           th:value="${groupMemberMap.key}"
@@ -174,8 +178,7 @@
                       </select>
                       <div class="invalid-feedback" th:errors="*{addMemberId3rd}"></div>
                     </div>
-
-                    <div class="form-group col-auto my-0 py-0" style="width: 155px">
+                    <div class="form-group col-6 mt-0 mb-1">
                       <select class="form-control form-control-sm" id="addMemberId4th" name="addMemberId4th" th:errorclass="is-invalid" th:disabled="${editControl}">
                         <option th:each="groupMemberMap : ${pullDownContentService.prepareGroupMemberMap(groupId)}"
                           th:value="${groupMemberMap.key}"
@@ -187,46 +190,46 @@
                     </div>
                   </div>
                   
-                  <!-- <p class="small font-weight-bolder mx-1 my-0">作業日一覧
+                  <p class="small font-weight-bolder mx-1 mt-1 mb-0">作業日一覧
                   <span class="badge badge-light m-0"></span>
                   </p>
                   <div class="form-row">
-                    <div class="form-group col-auto my-0" style="width: 155px">
-                      <input type="date" class="form-control form-control-sm" id="workedOn1st"
-                        th:errorclass="is-invalid" th:field="*{workedOn1st}" th:readonly="${editControl}" required>
-                      <div class="invalid-feedback" th:errors="*{workedOn1st}">
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <input type="date" class="form-control form-control-sm" id="addDate1st"
+                        th:errorclass="is-invalid" th:field="*{addDate1st}" th:readonly="${editControl}" required>
+                      <div class="invalid-feedback" th:errors="*{addDate1st}">
                       </div>
                     </div>
-                    <div class="form-group col-auto my-0" style="width: 155px">
-                      <input type="date" class="form-control form-control-sm" id="workedOn2nd"
-                        th:errorclass="is-invalid" th:field="*{workedOn2nd}" th:readonly="${editControl}" required>
-                      <div class="invalid-feedback" th:errors="*{workedOn2nd}">
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <input type="date" class="form-control form-control-sm" id="addDate2nd"
+                        th:errorclass="is-invalid" th:field="*{addDate2nd}" th:readonly="${editControl}" required>
+                      <div class="invalid-feedback" th:errors="*{addDate2nd}">
                       </div>
                     </div>
-                    <div class="form-group col-auto my-0" style="width: 155px">
-                      <input type="date" class="form-control form-control-sm" id="workedOn3rd"
-                        th:errorclass="is-invalid" th:field="*{workedOn3rd}" th:readonly="${editControl}" required>
-                      <div class="invalid-feedback" th:errors="*{workedOn3rd}">
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <input type="date" class="form-control form-control-sm" id="addDate3rd"
+                        th:errorclass="is-invalid" th:field="*{addDate3rd}" th:readonly="${editControl}" required>
+                      <div class="invalid-feedback" th:errors="*{addDate3rd}">
                       </div>
                     </div>
-                    <div class="form-group col-auto my-0" style="width: 155px">
-                      <input type="date" class="form-control form-control-sm" id="workedOn4th"
-                        th:errorclass="is-invalid" th:field="*{workedOn4th}" th:readonly="${editControl}" required>
-                      <div class="invalid-feedback" th:errors="*{workedOn4th}">
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <input type="date" class="form-control form-control-sm" id="addDate4th"
+                        th:errorclass="is-invalid" th:field="*{addDate4th}" th:readonly="${editControl}" required>
+                      <div class="invalid-feedback" th:errors="*{addDate4th}">
                       </div>
                     </div>
-                    <div class="form-group col-auto my-0" style="width: 155px">
-                      <input type="date" class="form-control form-control-sm" id="workedOn5th"
-                        th:errorclass="is-invalid" th:field="*{workedOn5th}" th:readonly="${editControl}" required>
-                      <div class="invalid-feedback" th:errors="*{workedOn5th}">
+                    <div class="form-group col-6 mt-0 mb-1">
+                      <input type="date" class="form-control form-control-sm" id="addDate5th"
+                        th:errorclass="is-invalid" th:field="*{addDate5th}" th:readonly="${editControl}" required>
+                      <div class="invalid-feedback" th:errors="*{addDate5th}">
                       </div>
                     </div>
-                  </div> -->
+                  </div>
                   
                   <div class="form-row">
                     <div class="form-group col-12 my-0">
                       <label for="memo" class="small font-weight-bolder mx-1 my-0">メモ</label>
-                      <textarea class="form-control form-control-sm" id="memo" th:errorclass="is-invalid" th:field="*{memo}" rows="2"></textarea>
+                      <textarea class="form-control form-control-sm" id="memo" th:errorclass="is-invalid" th:field="*{memo}" rows="1"></textarea>
                       <div class="invalid-feedback" th:errors="*{memo}">
                       </div>
                     </div>
@@ -238,6 +241,7 @@
                   <div class="form-row">
                     <div class="form-group col-6 my-1">
                       <input class="btn btn-primary btn-block py-1" type="button" value="保存" onclick="check();">
+                      <!-- <input class="btn btn-primary btn-block py-1" type="submit" value="保存"> -->
                     </div>
                     <div class="form-group col-6 my-1">
                       <input class="btn btn-secondary btn-block py-1" type="reset" value="クリア">
@@ -292,53 +296,54 @@
     // 作業区分で「フロント**」を選択時に件名/客先名を補完
     function inputChange(event){
       // console.log(event.currentTarget.value);
-      // 取得したworkCategoryの値をscheduleSubjectに渡す
-      var scheduleSubject = document.getElementById('scheduleSubject');
+      // 取得したcategoryIdの値をsubjectLineに渡す
+      var subjectLine = document.getElementById('subjectLine');
       //件名にデータがない場合、処理する
-      if(!scheduleSubject.value && event.currentTarget.value.includes(3)){
-        scheduleSubject.value = 'フロント昼勤';
-      }else if(!scheduleSubject.value && event.currentTarget.value.includes(4)){
-        scheduleSubject.value = 'フロント夜勤';
-      }else if(!scheduleSubject.value && event.currentTarget.value.includes(10)){
-        scheduleSubject.value = '在宅';
+      if(!subjectLine.value && event.currentTarget.value.includes(3)){
+        subjectLine.value = 'ｺｰﾙｾﾝﾀ';
+      }else if(!subjectLine.value && event.currentTarget.value.includes(8)){
+        subjectLine.value = '在宅';
+      }else if(!subjectLine.value && event.currentTarget.value.includes(10)){
+        subjectLine.value = '社内便当番';
       }
     }
-    // workCategoryの入力値を取得
-    let workCategory = document.getElementById('workCategoryId');
-    workCategory.addEventListener('change', inputChange); 
+    // categoryIdの入力値を取得
+    let categoryId = document.getElementById('categoryId');
+    categoryId.addEventListener('change', inputChange); 
 
     // 作業区分と件名/客先名が入力済みの場合、submitボタンを有効化
     function check(){
-      var scheduleSubject = document.getElementById('scheduleSubject').value;
-      var workCategory = document.getElementById('workCategoryId').value;
+      // var subjectLine = document.getElementById('subjectLine').value;
+      // var categoryId = document.getElementById('categoryId').value;
 
-      var workerList = [];
-      workerList.push(document.getElementById('addMemberId1st').value);
-      workerList.push(document.getElementById('addMemberId2nd').value);
-      workerList.push(document.getElementById('addMemberId3rd').value);
-      workerList.push(document.getElementById('addMemberId4th').value);
-      var checkWorkerList = workerList.includes(document.getElementById('employeeId').value);
+      // var workerList = [];
+      // workerList.push(document.getElementById('addMemberId1st').value);
+      // workerList.push(document.getElementById('addMemberId2nd').value);
+      // workerList.push(document.getElementById('addMemberId3rd').value);
+      // workerList.push(document.getElementById('addMemberId4th').value);
+      // var checkWorkerList = workerList.includes(document.getElementById('employeeId').value);
 
-      var workDayList = [];
-      workDayList.push(document.getElementById('workedOn1st').value);
-      workDayList.push(document.getElementById('workedOn2nd').value);
-      workDayList.push(document.getElementById('workedOn3rd').value);
-      workDayList.push(document.getElementById('workedOn4th').value);
-      workDayList.push(document.getElementById('workedOn5th').value);
-      var checkWorkDayListLength = workDayList[0].length+workDayList[1].length+workDayList[2].length+workDayList[3].length+workDayList[4].length;
+      // var workDayList = [];
+      // workDayList.push(document.getElementById('addDate1st').value);
+      // workDayList.push(document.getElementById('addDate2nd').value);
+      // workDayList.push(document.getElementById('addDate3rd').value);
+      // workDayList.push(document.getElementById('addDate4th').value);
+      // workDayList.push(document.getElementById('addDate5th').value);
+      // var checkWorkDayListLength = workDayList[0].length+workDayList[1].length+workDayList[2].length+workDayList[3].length+workDayList[4].length;
 
-      if(scheduleSubject==="" || workCategory===""){
-        document.getElementById('scheduleSubject').style.backgroundColor = '#ffe4e1';
-        document.getElementById('workCategoryId').style.backgroundColor = '#ffe4e1';
-      }else if(!(checkWorkerList)){
-        document.getElementById('employeeId').style.backgroundColor = '#ffe4e1';
-        document.getElementById('workerList').style.backgroundColor = '#ffe4e1';
-      }else if(checkWorkDayListLength===0){
-        document.getElementById('workedOn1st').style.backgroundColor = '#ffe4e1';
-      }else{
-        // submitボタンの有効化
-        document.schedule_form.submit();
-      }
+      // if(subjectLine==="" || categoryId===""){
+      //   document.getElementById('subjectLine').style.backgroundColor = '#ffe4e1';
+      //   document.getElementById('categoryId').style.backgroundColor = '#ffe4e1';
+      // }else if(!(checkWorkerList)){
+      //   document.getElementById('employeeId').style.backgroundColor = '#ffe4e1';
+      //   document.getElementById('workerList').style.backgroundColor = '#ffe4e1';
+      // }else if(checkWorkDayListLength===0){
+      //   document.getElementById('addDate1st').style.backgroundColor = '#ffe4e1';
+      // }else{
+      //   // submitボタンの有効化
+      //   document.schedule_form.submit();
+      // }
+      document.schedule_form.submit();
     }  
     
   </script>

@@ -2732,3 +2732,83 @@ java.lang.NullPointerException: Cannot invoke "org.eclipse.jdt.core.dom.Type.res
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 23:58:56.021
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.yjXJcyDR => OK
+!SESSION 2022-06-22 20:23:30.790 -----------------------------------------------
+eclipse.buildId=4.14.0.202203131612
+java.version=17.0.2
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ja_JP
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:42.213
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:42.215
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@95ee469[org.springframework.tooling.boot.ls:1.32.0.202203131529(id=619)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:42.222
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:42.318
+!MESSAGE Instantiating ReusableClasspathListenerHandler
+
+!ENTRY org.eclipse.egit.ui 2 0 2022-06-22 20:23:44.252
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\mtkws'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.505
+!MESSAGE 起動から初期化までの Boot LS 起動時間: 3280ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.596
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.OHrGhVFeisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.599
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.601
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.601
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.602
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.602
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.OHrGhVFe => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.619
+!MESSAGE classpath=103 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.622
+!MESSAGE buffering callback sts4.classpath.OHrGhVFe schedule-board false 103
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:45.622
+!MESSAGE executing callback sts4.classpath.OHrGhVFe 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-22 20:23:46.413
+!MESSAGE executing callback sts4.classpath.OHrGhVFe SUCCESS [done]
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-06-22 20:32:55.592
+!MESSAGE Using unsafe http transport to retrieve http://download.eclipse.org/usssdk/updates/release/latest, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2022-06-22 20:32:58.036
+!MESSAGE Using unsafe http transport to retrieve http://download.eclipse.org/usssdk/drops/release/1.2.2/content.xml.xz, see CVE-2021-41033. Consider using https instead.
+
+!ENTRY org.eclipse.ui 2 2 2022-06-22 20:35:50.657
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-23 00:24:27.824
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.OHrGhVFe
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-23 00:24:27.825
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.OHrGhVFe
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-23 00:24:27.825
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-23 00:24:27.825
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.OHrGhVFe => OK
