@@ -23,5 +23,8 @@ public interface GroupMemberRepository extends PagingAndSortingRepository<GroupM
 			+ "-- WHERE display_flag is TRUE AND group_id = 1 -- デバッグ用\r\n"
 			+ "ORDER BY display_order")
 	List<GroupMember> findByDisplayFlagIsTrueAndGroupIdOrderByDisplayOrder(int groupId);
+	
+	// Schedule保存時に使用
+	List<GroupMember> findByGroupIdAndMemberId(int groupId, String memberId);
 
 }

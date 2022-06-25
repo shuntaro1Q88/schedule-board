@@ -3,6 +3,7 @@ package com.shunproduct.scheduleboard.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -36,5 +37,10 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
 			+ "LEFT JOIN target_tb ON company_calendars.calendar_date = target_tb.main_date\r\n"
 			+ "WHERE target_tb.main_date BETWEEN :startDate AND :endDate -- 変数設定")
 	List<Schedule> findByGroupIdAndMainDateBetween(int groupId, LocalDate startDate, LocalDate endDate);
+	
+	// 指定の"scheduleGroupId"を持つ"Schedule"の削除
+	@Modifying // "@Modifying"がないと、"クエリは結果を返却しませんでした"とエラーが出る
+	@Query("DELETE FROM schedules WHERE schedule_group_id =:scheduleGroupId")
+	void deleteByScheduleGroupId(String scheduleGroupId);
 
 }

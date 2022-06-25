@@ -1,7 +1,0 @@
-package com.shunproduct.scheduleboard.repository;
-
-import org.springframework.data.repository.CrudRepository;
-
-public class CalendarRepository implements CrudRepository<T, ID> {
-
-}

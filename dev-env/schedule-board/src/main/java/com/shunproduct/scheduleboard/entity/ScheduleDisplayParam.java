@@ -1,7 +1,6 @@
 package com.shunproduct.scheduleboard.entity;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 @Data

@@ -10,31 +10,42 @@ import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.shunproduct.scheduleboard.entity.Schedule;
 import com.shunproduct.scheduleboard.entity.ScheduleDisplayParam;
-import com.shunproduct.scheduleboard.entity.SiteUser;
 import com.shunproduct.scheduleboard.repository.CompanyCalendarRepository;
+import com.shunproduct.scheduleboard.repository.ScheduleRepository;
 import com.shunproduct.scheduleboard.repository.SiteUserRepository;
 import com.shunproduct.scheduleboard.service.PullDownContentService;
+import com.shunproduct.scheduleboard.service.ScheduleSaveService;
 import com.shunproduct.scheduleboard.service.UserDayScheduleListMapService;
 
 import lombok.RequiredArgsConstructor;
 
-@SessionAttributes("displayParam")
+@SessionAttributes("scheduleDisplayParam")
 @RequiredArgsConstructor
 @Controller
 public class ScheduleController {
 	
 	private final SiteUserRepository siteUserRepository;
+	private final ScheduleRepository scheduleRepository;
 	private final CompanyCalendarRepository companyCalendarRepository;
 	private final UserDayScheduleListMapService userDayScheduleListMapService;
 	private final PullDownContentService pullDownContentService;
+	private final ScheduleSaveService scheduleSaveService;
 	
+	@ModelAttribute("scheduleDisplayParam") // セッションに保存するオブジェクトの本体はメソッドに@ModelAttributeアノテーションを付けて作成する。
+	public ScheduleDisplayParam scheduleDisplayParam() {
+		return new ScheduleDisplayParam();
+	}
 	
 	@GetMapping("/schedule-board")
 	public String displaySchedule(Authentication loginUser, ScheduleDisplayParam scheduleDisplayParam,
@@ -42,12 +53,6 @@ public class ScheduleController {
 			Model model, Principal principal)
 			throws UnsupportedEncodingException {
 		
-		SiteUser user = siteUserRepository.findByUsername(principal.getName());
-		
-		groupId = String.valueOf(user.getGroupId());
-		startDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now());
-		displayTerm = "28";
-
 		// スケジュール表示画面のパラメータ情報をsessionに保存
 		scheduleDisplayParam.setGroupId(Integer.parseInt(groupId));
 		scheduleDisplayParam.setStartDate(startDate);
@@ -58,11 +63,10 @@ public class ScheduleController {
 		// 表示する期間の設定
 		LocalDate ldStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate ldEndDate = ldStartDate.plusDays(Integer.parseInt(displayTerm));
-
 		// スケジュール画面1行目、日付用データ
 		List<String> dayOfWeekInfoList = companyCalendarRepository.findByMainDateBetween(ldStartDate, ldEndDate.minusDays(1));
 		dayOfWeekInfoList.add(0,"YYYY-MM-DD,param");
-		// viewに渡す
+		// viewに渡す YYYY-MM-DD,param形式のデータのなっており、","で区切って、平日or休日を判定
 		model.addAttribute("displayDateList", dayOfWeekInfoList);
 
 		// スケジュール画面に渡すスケジュールマップを取得
@@ -70,7 +74,7 @@ public class ScheduleController {
 		// viewに渡す
 		model.addAttribute("userDayScheduleListMap", userDayScheduleListMap);
 		
-		// viewに渡す
+		// その他、viewに渡す情報
 		model.addAttribute("loginId", principal.getName()); // パスワード変更画面遷移のため
 		model.addAttribute("role", siteUserRepository.findByUsername(principal.getName()).getRole()); // 権限設定のありページ表示のため role==管理の場合、管理者権限用ページを表示する
 		model.addAttribute("pullDownContentService", pullDownContentService); // 画面上部条件変更用プルダウン、
@@ -82,24 +86,61 @@ public class ScheduleController {
 	
 	// 新規予定の追加
 	@GetMapping("/add-schedule/{groupId}/{memberId}/{mainDate}")
-	public String addNewSchedule(@PathVariable("groupId") String groupId, @PathVariable("memberId") String memberId, @PathVariable("mainDate") String mainDate, Model model, Principal principal) {
+	public String addSchedule(
+			@PathVariable("groupId") String groupId, @PathVariable("memberId") String memberId, @PathVariable("mainDate") String mainDate,
+			Model model, Principal principal) {
 
 		// 新規入力フォームの初期値の設定
 		Schedule schedule = new Schedule();
 		
 		schedule.setGroupId(Integer.parseInt(groupId));
+		// 作業者
 		schedule.setMemberId(memberId);
 		schedule.setAddMemberId1st(memberId);
+		// 作業日
 		schedule.setMainDate(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		schedule.setAddDate1st(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-		schedule.setStatusId(0);
+		schedule.setAddDate2nd(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		schedule.setAddDate3rd(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		schedule.setAddDate4th(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		schedule.setAddDate5th(LocalDate.parse(mainDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 		model.addAttribute("schedule", schedule);
 		model.addAttribute("pullDownContentService", pullDownContentService);
 
-
+		return "schedule-register-form";
+	}
+	
+	// 既存予定の編集
+	@GetMapping("/add-schedule/{groupId}/{memberId}/{mainDate}/{scheduleId}")
+	public String updateSchedule(
+			@PathVariable("groupId") String groupId, @PathVariable("memberId") String memberId, @PathVariable("mainDate") String mainDate, @PathVariable("scheduleId") String scheduleId,
+			Model model, Principal principal) {
+		
+		model.addAttribute("schedule", scheduleRepository.findById(Long.parseLong(scheduleId)).get());
+		model.addAttribute("pullDownContentService", pullDownContentService);
 
 		return "schedule-register-form";
+	}
+	
+	// 入力された予定の処理
+	@PostMapping("/process-add-schedule")
+	public String process(@Validated @ModelAttribute Schedule schedule, BindingResult result, ScheduleDisplayParam scheduleDisplayParam,
+			Principal principal) throws Exception {
+
+		// 登録失敗時の処理
+		if (result.hasErrors()) {
+			System.out.println("登録失敗");
+
+			return "schedule-register-form";
+		}
+		
+		scheduleSaveService.addOrUpdate(schedule, principal);
+		
+		// sessionに保存された設定情報を取得し、getパラメータを準備
+		// String param = viewRoutingService.prepareGetParam(displayParam.getGroupCategoryId(),displayParam.getStartDate(), displayParam.getDisplayTerm());
+		
+		return "redirect:/schedule-board";
 	}
 
 }
