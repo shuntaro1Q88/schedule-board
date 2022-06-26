@@ -29,7 +29,7 @@
       <div id="content">
         <div class="container-fluid px-0">
           <!-- DataTales -->
-          <div class="card shadow my-0">
+          <div class="card my-0">
             <div class="card-body px-1 py-0">
               <div class="table m-0">
                 <form th:action="@{/process-add-schedule}" th:object="${schedule}" name="schedule_form"
@@ -221,14 +221,14 @@
                   <div class="form-group col-6  my-0">
                     <a th:href="@{'/add-schedule/' + ${schedule.getGroupId()} + '/' + ${schedule.getMemberId()} + '/' + ${schedule.getMainDate()}}"
                       class="btn btn-outline-success btn-block btn-sm mt-0 py-1">
-                      <span class="text">新規登録フォームを開く</span>
+                      <span class="text" style="font-size: 0.75rem;">新規登録フォームを開く</span>
                     </a>
                   </div>
                 </div>
 
                 <div th:if="${scheduleId != null}">
                   <div class="text-right mx-1 my-0">
-                    <span class="small" th:text="${'最終更新 : ' + schedule.getUpdatedBy()}"></span>
+                    <span class="small" th:text="${'最終更新 : ' + updateInfo}"></span>
                   </div>
                 </div>
                 

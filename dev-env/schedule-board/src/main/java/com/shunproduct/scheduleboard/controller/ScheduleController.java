@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,6 +124,7 @@ public class ScheduleController {
 		
 		model.addAttribute("schedule", scheduleRepository.findById(Long.parseLong(scheduleId)).get());
 		model.addAttribute("pullDownContentService", pullDownContentService);
+		model.addAttribute("updateInfo", scheduleRepository.findUpdateInfoByScheduleId(Long.parseLong(scheduleId)));
 
 		return "schedule-register-form";
 	}
@@ -146,6 +148,32 @@ public class ScheduleController {
 		}
 		
 		scheduleSaveService.addOrUpdate(schedule, principal);
+
+		return "redirect:/schedule-board" + param;
+	}
+	
+	// 削除処理
+	@GetMapping("/delete-schedule/{scheduleId}")
+	public String deleteSchedule(@PathVariable("scheduleId") String scheduleId, @ModelAttribute Schedule schedule, ScheduleDisplayParam scheduleDisplayParam,
+			Principal principal) throws Exception {
+
+		System.out.println("--削除処理-------------------------");
+		System.out.println("確認　ID " + schedule.getScheduleId());
+		System.out.println("確認　グループID " + scheduleRepository.findById(Long.parseLong(scheduleId)).get().getScheduleGroupId());
+		System.out.println("----------------------------------");
+
+		// グループIDがない場合
+		if (StringUtils.isEmpty(scheduleRepository.findById(Long.parseLong(scheduleId)).get().getScheduleGroupId())) {
+			scheduleRepository.deleteById(Long.parseLong(scheduleId));
+			// グループIDがある場合、同じグループIDを持つscheduleを削除
+		} else {
+			scheduleRepository.deleteByScheduleGroupId(
+					scheduleRepository.findById(Long.parseLong(scheduleId)).get().getScheduleGroupId());
+		}
+
+		// sessionに保存された設定情報を取得し、getパラメータを準備
+		String param = "?groupId=" + scheduleDisplayParam.getGroupId() + "&startDate="
+				+ scheduleDisplayParam.getStartDate() + "&displayTerm=" + scheduleDisplayParam.getDisplayTerm();
 
 		return "redirect:/schedule-board" + param;
 	}

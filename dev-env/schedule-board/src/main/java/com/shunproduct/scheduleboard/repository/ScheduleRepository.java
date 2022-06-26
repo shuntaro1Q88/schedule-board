@@ -42,5 +42,11 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
 	@Modifying // "@Modifying"がないと、"クエリは結果を返却しませんでした"とエラーが出る
 	@Query("DELETE FROM schedules WHERE schedule_group_id =:scheduleGroupId")
 	void deleteByScheduleGroupId(String scheduleGroupId);
+	
+	// 更新者情報をフォームに表示する "YYYY-MM-DD HH24:MI:SS + 社員名"の文字列を返す
+	@Query("SELECT CONCAT(TO_CHAR(schedules.updated_at, 'YYYY-MM-DD HH24:MI:SS'), ' ', site_users.family_name,site_users.first_name) AS updated_info\r\n"
+			+ "FROM schedules LEFT JOIN site_users ON schedules.updated_by = site_users.user_id\r\n"
+			+ "WHERE schedules.schedule_id =:scheduleId")
+	String findUpdateInfoByScheduleId(Long scheduleId);
 
 }

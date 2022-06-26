@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class ScheduleSaveService {
 
 	private final ScheduleRepository scheduleRepository;
-	// private final GroupMemberRepository groupMemberRepository;
 	private final SiteUserRepository siteUserRepository;
 
 	Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -52,14 +51,8 @@ public class ScheduleSaveService {
 		// idがない⇒新規登録、idがある⇒既存予定の更新
 		if (schedule.getScheduleId() == null) {
 			addProcess(schedule, memberList, workDateList, principal);
-			logger.info("[schedule input log] " + "LoginUser " + principal.getName() + " targetID "
-					+ schedule.getScheduleId() + " groupID " + schedule.getScheduleGroupId() + " memberList.size "
-					+ memberList.size() + " workDateList.size " + workDateList.size());
 		} else {
 			updateProcess(schedule, memberList, workDateList, principal);
-			logger.info("[schedule input log] " + "LoginUser " + principal.getName() + " targetID "
-					+ schedule.getScheduleId() + " groupID " + schedule.getScheduleGroupId() + " memberList.size "
-					+ memberList.size() + " workDateList.size " + workDateList.size());
 		}
 	}
 
@@ -227,7 +220,7 @@ public class ScheduleSaveService {
 
 				// 定番
 				addSchedule.setGroupId(schedule.getGroupId());
-        addSchedule.setCategoryId(schedule.getCategoryId());
+				addSchedule.setCategoryId(schedule.getCategoryId());
 				addSchedule.setStatusId(schedule.getStatusId());
 				addSchedule.setSubjectLine(schedule.getSubjectLine());
 				addSchedule.setContent(schedule.getContent());
@@ -271,7 +264,9 @@ public class ScheduleSaveService {
 			// 1-4 新規登録に対する処理 グループID：ナシ、作業者リスト：アリ、作業日リスト：アリ
 		} else if (StringUtils.isBlank(schedule.getScheduleGroupId()) && memberList.size() > 1 && workDateList.size() > 1) {
 
-			System.out.println("処理内容 : 新規登録に対する処理 グループID：ナシ、作業者リスト：アリ、作業日リスト：アリ");
+			System.out.println("1-4 新規登録に対する処理 グループID：ナシ、作業者リスト：アリ、作業日リスト：アリ");
+			System.out.println(schedule.getCreatedBy());
+			System.out.println(schedule.getUpdatedBy());
 
 			// "scheduleGroupId"の用意
 			LocalDateTime now = LocalDateTime.now();
