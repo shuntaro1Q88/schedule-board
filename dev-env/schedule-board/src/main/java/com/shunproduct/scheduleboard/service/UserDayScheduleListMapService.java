@@ -77,8 +77,6 @@ public class UserDayScheduleListMapService {
 					schedule.setGroupId(groupMemberList.get(i).getGroupId());
 					schedule.setMemberId(groupMemberList.get(i).getMemberId());
 					schedule.setMainDate(LocalDate.parse(displayDateList.get(j), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-					schedule.setSubjectLine("");
-					schedule.setCategoryId(0);
 
 					scheduleList.add(schedule);
 

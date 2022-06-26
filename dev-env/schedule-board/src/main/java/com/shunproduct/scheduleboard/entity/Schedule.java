@@ -16,7 +16,8 @@ import lombok.Data;
 @Data
 public class Schedule {
 	
-	@Id@Column("schedule_id")
+	@Id
+	@Column("schedule_id")
 	private Long scheduleId;
 
 	@Column("group_id")
@@ -32,7 +33,7 @@ public class Schedule {
 	private String subjectLine;
 	
 	@Column("main_date")
-	@DateTimeFormat( pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate mainDate;
 	
 	@Column("status_id")
@@ -51,18 +52,23 @@ public class Schedule {
 	private String scheduleGroupId;
 
 	@Column("add_member_id_1st")
+//	@Pattern(regexp = "[0-9-]{6}")
 	private String addMemberId1st;
 
 	@Column("add_member_id_2nd")
+//	@Pattern(regexp = "[0-9-]{6}")
 	private String addMemberId2nd;
 
 	@Column("add_member_id_3rd")
+//	@Pattern(regexp = "[0-9-]{6}")
 	private String addMemberId3rd;
 	
 	@Column("add_member_id_4th")
+//	@Pattern(regexp = "[0-9-]{6}")
 	private String addMemberId4th;
 	
 	@Column("add_member_id_5th")
+//	@Pattern(regexp = "[0-9-]{6}")
 	private String addMemberId5th;
 	
 	@Column("add_date_1st")

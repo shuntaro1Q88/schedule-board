@@ -377,7 +377,11 @@ public class ScheduleSaveService {
 			// 作業日
 			schedule.setMainDate(workDateList.get(0));
 			schedule.setAddDate1st(workDateList.get(0));
-
+			schedule.setAddDate2nd(workDateList.get(0));
+			schedule.setAddDate3rd(workDateList.get(0));
+			schedule.setAddDate4th(workDateList.get(0));
+			schedule.setAddDate5th(workDateList.get(0));
+			
 			scheduleRepository.save(schedule);
 
 			// 2-2 既存予定の更新に対する処理
@@ -397,7 +401,7 @@ public class ScheduleSaveService {
 
 				// 定番
 				addSchedule.setGroupId(schedule.getGroupId());
-        addSchedule.setCategoryId(schedule.getCategoryId());
+                addSchedule.setCategoryId(schedule.getCategoryId());
 				addSchedule.setStatusId(schedule.getStatusId());
 				addSchedule.setSubjectLine(schedule.getSubjectLine());
 				addSchedule.setContent(schedule.getContent());
@@ -457,7 +461,7 @@ public class ScheduleSaveService {
 
 				// 定番
 				addSchedule.setGroupId(schedule.getGroupId());
-        addSchedule.setCategoryId(schedule.getCategoryId());
+				addSchedule.setCategoryId(schedule.getCategoryId());
 				addSchedule.setStatusId(schedule.getStatusId());
 				addSchedule.setSubjectLine(schedule.getSubjectLine());
 				addSchedule.setContent(schedule.getContent());

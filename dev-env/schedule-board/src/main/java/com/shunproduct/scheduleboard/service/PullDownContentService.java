@@ -80,7 +80,7 @@ public class PullDownContentService {
 	// 状態 (確定 or 仮) のプルダウンを準備
 	public Map<Integer, String> prepareScheduleStatusMap() {
 		
-		List<ScheduleStatus> scheduleStatusList = (List<ScheduleStatus>) scheduleStatusRepository.findAll();
+		List<ScheduleStatus> scheduleStatusList = scheduleStatusRepository.findAllOrderByDisplayOrderAsc();
 		Map<Integer, String> scheduleStatusMap = new LinkedHashMap<>();
 		
 		for (int i = 0; i < scheduleStatusList.size(); i++) {

@@ -27,6 +27,8 @@ import com.shunproduct.scheduleboard.repository.SiteUserRepository;
 import com.shunproduct.scheduleboard.service.PullDownContentService;
 import com.shunproduct.scheduleboard.service.ScheduleSaveService;
 import com.shunproduct.scheduleboard.service.UserDayScheduleListMapService;
+import com.shunproduct.scheduleboard.service.ViewStyleService;
+import com.shunproduct.scheduleboard.util.ScheduleDisplayParamDefaultConst;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +43,7 @@ public class ScheduleController {
 	private final UserDayScheduleListMapService userDayScheduleListMapService;
 	private final PullDownContentService pullDownContentService;
 	private final ScheduleSaveService scheduleSaveService;
+	private final ViewStyleService viewStyleService;
 	
 	@ModelAttribute("scheduleDisplayParam") // セッションに保存するオブジェクトの本体はメソッドに@ModelAttributeアノテーションを付けて作成する。
 	public ScheduleDisplayParam scheduleDisplayParam() {
@@ -66,7 +69,7 @@ public class ScheduleController {
 		// スケジュール画面1行目、日付用データ
 		List<String> dayOfWeekInfoList = companyCalendarRepository.findByMainDateBetween(ldStartDate, ldEndDate.minusDays(1));
 		dayOfWeekInfoList.add(0,"YYYY-MM-DD,param");
-		// viewに渡す YYYY-MM-DD,param形式のデータのなっており、","で区切って、平日or休日を判定
+		// viewに渡す YYYY-MM-DD,param形式のデータになっており、","で区切って、平日or休日を判定
 		model.addAttribute("displayDateList", dayOfWeekInfoList);
 
 		// スケジュール画面に渡すスケジュールマップを取得
@@ -78,7 +81,8 @@ public class ScheduleController {
 		model.addAttribute("loginId", principal.getName()); // パスワード変更画面遷移のため
 		model.addAttribute("role", siteUserRepository.findByUsername(principal.getName()).getRole()); // 権限設定のありページ表示のため role==管理の場合、管理者権限用ページを表示する
 		model.addAttribute("pullDownContentService", pullDownContentService); // 画面上部条件変更用プルダウン、
-//		model.addAttribute("workCategoryBgColorMap", viewStyleService.getWorkCategoryBgColorMap());
+		model.addAttribute("scheduleCategoryMap", viewStyleService.prepareScheduleCategoryMap());
+		model.addAttribute("scheduleStatusMap", viewStyleService.prepareScheduleStatusMap());
 
 		return "schedule-board";
 
@@ -127,20 +131,23 @@ public class ScheduleController {
 	@PostMapping("/process-add-schedule")
 	public String process(@Validated @ModelAttribute Schedule schedule, BindingResult result, ScheduleDisplayParam scheduleDisplayParam,
 			Principal principal) throws Exception {
+		
+		// sessionに保存された設定情報を取得し、getパラメータを準備
+		String param = 
+				"?groupId=" + scheduleDisplayParam.getGroupId()
+				+ "&startDate=" + scheduleDisplayParam.getStartDate()
+				+ "&displayTerm=" + scheduleDisplayParam.getDisplayTerm();
 
 		// 登録失敗時の処理
 		if (result.hasErrors()) {
 			System.out.println("登録失敗");
 
-			return "schedule-register-form";
+			return "redirect:/schedule-board" + param;
 		}
 		
 		scheduleSaveService.addOrUpdate(schedule, principal);
-		
-		// sessionに保存された設定情報を取得し、getパラメータを準備
-		// String param = viewRoutingService.prepareGetParam(displayParam.getGroupCategoryId(),displayParam.getStartDate(), displayParam.getDisplayTerm());
-		
-		return "redirect:/schedule-board";
+
+		return "redirect:/schedule-board" + param;
 	}
 
 }
