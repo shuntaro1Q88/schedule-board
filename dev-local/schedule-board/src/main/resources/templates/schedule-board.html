@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.2/css/all.min.css}">
+  <link th:href="@{/css/schedule.css}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" th:src="@{/js/schedule-board-reload.js}"></script>
+  <title>行動表示板</title>  
+</head>
+<body>
+  <div class="container-fluid px-0">
+
+    <nav class="navbar m-0 p-0">
+      <form class="mr-auto" th:object="${scheduleDisplayParam}">
+        <div class="form-row align-items-center">
+          <div class="col-md-auto col-sm-12">
+            <span class="lead text-dark font-weight-bold mx-1 my-0">行動表示板</span>
+          </div>
+          
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- グループカテゴリのプルダウン -->
+            <select class="form-control form-control-sm mx-1 my-1 p-0" id="groupId" name="groupId" th:errorclass="is-invalid">
+              <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}" 
+                th:value="${groupMap.key}" 
+                th:text="${groupMap.value}"
+                th:selected="${groupMap.key == scheduleDisplayParam.getGroupId()}">
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- 表示開始日 -->
+            <input type="date" th:value="${scheduleDisplayParam.getStartDate()}" class="form-control form-control-sm mx-1 my-1 p-0" name="startDate">
+          </div>
+          
+          <div class="col-md-auto col-sm-3 col-6">
+            <!-- 表示期間 -->
+            <select class="form-control form-control-sm mx-1 my-1 p-0" name="displayTerm" th:errorclass="is-invalid">
+              <option th:each="displayTermMap : ${pullDownContentService.prepareDisplayTermMap()}" 
+                th:value="${displayTermMap.key}" 
+                th:text="${displayTermMap.value}"
+                th:selected="${displayTermMap.key == scheduleDisplayParam.getDisplayTerm()}">
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-auto col-sm-4 col-6">
+            <button type="submit" class="form-control form-control-sm btn btn-sm btn-info mx-1 my-0">更新</button>
+          </div>
+
+        </div>
+      </form>
+      
+      <div class="dropdown m-0 p-0 ml-auto d-none d-md-block">
+        <button type="button" id="dropdown1" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          各種設定
+        </button>
+        <div class="dropdown-menu dropdown-menu-left m-0 p-0" aria-labelledby="dropdown1">
+          <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/edit-user-password} + '/' + ${loginId}">パスワード変更</a>
+          <div th:if="${role == 'admin'}">
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/user-list}">サイトユーザー管理</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/employee-list}">表示メンバー管理</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" th:href="@{/admin/data-export}">準備中_データ出力</a>
+            <a class="dropdown-item d-flex align-items-center px-2 py-0" href="@{#}">準備中_休日設定</a>
+          </div>
+        </div>
+      </div>
+      <form method="post" th:action="@{/logout}">
+        <button class="btn btn-sm btn-outline-warning font-weight-bolder my-0 mx-1 d-none d-md-block">ログアウト</button>
+      </form>
+
+    </nav>
+    
+    <div class="table-responsive">
+      <div th:if="${userDayScheduleListMap.size() == 0}">
+        該当データがありません
+      </div>
+      <table class="table table-bordered table-sm table-hover" th:if="${userDayScheduleListMap.size() > 0}" style="table-layout:fixed;">
+      
+        <thead class="thead-light text-center">
+          <tr>
+            <th:block th:each="date : ${displayDateList}">
+              <th:block th:switch="${#strings.substringAfter(date,',')}">
+                <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:50px; "></th>
+                <th th:case="0" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="6" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="7" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #c966ff;"></th>
+                <th th:case="8" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #667dff;"></th>
+                <th th:case="*" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #696969;"></th>
+              </th:block>
+            </th:block>
+          </tr>
+        </thead>
+        <tbody id="box">
+          <th:block th:each="users : ${userDayScheduleListMap.entrySet()}">
+            <tr>
+              <th class="m-0 p-0"  style="width:50px; vertical-align: middle;">
+                <p class="font-weight-bold m-0 p-0 pl-1" th:text="${#strings.substringBefore(#strings.substringAfter(users.getKey(),'_'), ' ')}"></p>
+                <p class="font-weight-bold m-0 p-0 pl-1" th:text="${#strings.substringAfter(users.getKey(),' ')}"></p>
+              </th>
+              <th:block th:each="dailyScheduleMap : ${userDayScheduleListMap.get(users.getKey())}">
+                <td class="m-0 p-0">
+                  <th:block th:each="scheduleList, status : ${dailyScheduleMap.value}">
+                  
+                    <div th:if="${scheduleList.getScheduleId() == null}" class="table-cell m-0 p-0">
+                      <a th:href="@{'/add-schedule/' + ${scheduleList.getGroupId()} + '/' + ${scheduleList.getMemberId()} + '/' + ${scheduleList.getMainDate()}}"
+                        class="text-secondary far fa-plus-square table-cell-link ml-1" data-toggle="modal" data-target="#myModal" onclick="changeModal(this)">
+                      </a>
+                    </div>
+
+                    <div th:if="${scheduleList.getScheduleId() != null}" class="table-cell m-0 p-0" 
+                      th:style="${'background-color:' + scheduleCategoryMap.get(scheduleList.getCategoryId()) + ';'}">
+                      <a th:text="${scheduleStatusMap.get(scheduleList.getStatusId()) + scheduleList.getSubjectLine()}"
+                      th:href="@{'/add-schedule/' + ${scheduleList.getGroupId()} + '/' + ${scheduleList.getMemberId()} + '/' + ${scheduleList.getMainDate()} + '/' + ${scheduleList.getScheduleId()}}"
+                      class="table-cell-link" data-toggle="modal" data-target="#myModal" onclick="changeModal(this)">
+                      </a>
+                    </div>
+                  </th:block>
+                </td>
+              </th:block>
+            </tr>
+          </th:block>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- モーダル -->
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+      <!-- モーダルのダイアログ本体 -->
+      <div class="modal-dialog modal-md modal-autoheight" role="document"> 
+        <!-- モーダルのコンテンツ部分 -->
+        <div class="modal-content"> 
+          <!-- モーダルのヘッダー -->
+          <div class="modal-header m-0 px-3 py-1"> 
+            <!-- モーダルのタイトル -->
+            <h6 class="modal-title font-weight-bold" id="exampleModalLabel">予定入力フォーム</h6>
+            <!-- 閉じるアイコン -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          </div>
+          <!-- モーダルの本文 -->
+          <div class="modal-body m-0 p-0" id="honbun"></div>
+          <!-- モーダルのフッター -->
+          <!-- <div class="modal-footer m-0 px-3 py-1">  -->
+            <!-- 閉じるボタン -->
+            <!-- <button type="button" class="btn btn-secondary m-1 p-1" data-dismiss="modal">閉じる</button> -->
+            <!-- <button type="button" class="btn btn-primary">変更を保存</button> -->
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script>
+    function changeModal(element){
+      // name = element.getAttribute("data-form-name");
+      // $("#honbun")[0].innerHTML = name;
+      href = element.getAttribute("href");
+      $("#honbun")[0].innerHTML = "<iframe width='100%' height='100%' frameborder='0' src='" + href + "'></iframe>";
+      $("#myModal").draggable(); //ドラッグ
+    }
+
+    // https://codepen.io/cemg/pen/LQrxLV
+    $(function() {
+      if ($(".modal-autoheight").length > 0) {
+        $(".modal").on("show.bs.modal", resize);
+        $(window).on("resize", resize);
+      }
+    });
+
+    function resize() {
+      var winHeight = $(window).height();
+      $(".modal-autoheight .modal-body").css({
+        width: "auto",
+        height: (winHeight - 95) + "px"
+      });
+    }
+
+
+    // id属性が「box」である要素を取得;
+    var box01 = document.getElementById('box');    
+    // 「box」の高さを入力
+    box.style.height =window.innerHeight - 60 + 'px';
+    // console.log(window.innerHeight + 'px');
+    
+    // // 解像度を取得
+    // var sh = window.screen.height;
+    // var sw = window.screen.width;
+    
+    // console.log('解像度 幅 ' + sw + 'px, 高さ ' + sh + 'px');
+
+    // // 実際に有効な画面サイズ
+    // var ash = window.screen.availHeight;
+    // var asw = window.screen.availWidth;
+    
+    // console.log('有効な画面サイズ 幅 ' + asw + 'px, 高さ ' + ash + 'px');
+
+  </script>
+</body>
+</html>	
