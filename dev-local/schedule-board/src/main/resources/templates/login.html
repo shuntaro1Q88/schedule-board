@@ -5,20 +5,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css">
   <title>行動表示板 -ログイン-</title>
 </head>
 <body>
   <!-- Main -->
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-xl-5 col-lg-7 col-md-8">
+      <div class="col-lg-5 col-6">
         <div class="text-center my-5">
           <h2>行動表示板</h2>
         </div>
         <!-- Card -->
         <div class="card o-hidden border-0 shadow-lg my-1">
           <div class="card-body p-0">
-            <div class="p-5">
+            <div class="px-5 py-4">
             <!-- Login -->
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">
@@ -34,29 +35,30 @@
             <div class="alert alert-success" th:if="${param.logout}">
               <small>ログアウトしました</small>
             </div>
-            <form th:action="@{/login}" class="user" method="post" autocomplete="off" novalidate>
+            <form th:action="@{/login}" class="user my-2" method="post" autocomplete="off" novalidate>
               <div class="form-group">
-                <input type="text" class="form-control form-control-user"
+                <input type="text" class="form-control"
                   name="username" placeholder="社員番号 (6桁)" style="font-size: .8rem; height: 50px">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control form-control-user"
+                <input type="password" class="form-control"
                   name="password" placeholder="パスワード" style="font-size: .8rem; height: 50px">
-              </div>
-              <div class="form-group">
-                <div class="custom-control custom-checkbox small">
-                  <input type="checkbox" class="custom-control-input"
-                    id="remember-me" name="remember-me">
-                  <label class="custom-control-label" for="remember-me">
-                    ログインしたままにする
-                  </label>
-                </div>
               </div>
               <button class="btn btn-dark btn-user btn-block">
                 ログイン
               </button>
             </form>
-            <hr>
+
+
+            <form th:action="@{/login}" class="user" method="post" autocomplete="off" novalidate>
+              <input type="hidden" name="username" value="999999">
+              <input type="hidden" name="password" value="Vi9tcRuw">
+              <button class="btn btn-outline-secondary btn-user btn-block">
+                ゲストログイン
+              </button>
+            </form>
+
+            <hr class="my-3">
             <div class="text-center">
               <a class="text-dark" th:href="@{/user-register}">新規登録はこちら</a>
             </div>

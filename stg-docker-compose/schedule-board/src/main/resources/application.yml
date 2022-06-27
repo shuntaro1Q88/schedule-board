@@ -1,9 +1,9 @@
 spring:
   # DB接続先設定
   datasource:
-    # localの場合
+    # local開発環境の場合
     # url : jdbc:postgresql://localhost:5432/schedule_board
-    # docker-composeの場合
+    # docker-composeの開発環境の場合
     url : jdbc:postgresql://postgresql:5432/schedule_board
     username : postgres
     password : postgres
