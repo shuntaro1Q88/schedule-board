@@ -63,10 +63,10 @@ tbody::-webkit-scrollbar {
 } */
 
 a {
-  line-height: 0.9rem;
-  font-size: 0.9rem;
+  line-height: 0.8rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  height: 2.7rem;
+  height: 2.4rem;
   padding-top: 0.1rem;
   color: #000000;
   display: -webkit-box;
@@ -78,8 +78,8 @@ a {
 }
 
 p {
-  line-height: 1.0rem;
-  font-size: 1.0rem;
+  line-height: .8rem;
+  font-size: .8rem;
   word-wrap: break-word;
 }
 

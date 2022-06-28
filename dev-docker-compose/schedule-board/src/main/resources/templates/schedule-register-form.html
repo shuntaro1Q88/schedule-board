@@ -78,7 +78,7 @@
                       <span class="badge badge-pill badge-danger ml-1 mr-0 my-0">必須</span>
                       <label for="subjectLine" class="small font-weight-bolder m-0">件名
                       </label>
-                      <input type="text" class="form-control form-control-sm" id="subjectLine"
+                      <input type="text" class="form-control form-control-sm changeform" id="subjectLine"
                         th:errorclass="is-invalid" th:field="*{subjectLine}" th:readonly="${editControl}">
                       <div class="invalid-feedback" th:errors="*{subjectLine}">
                       </div>
@@ -88,7 +88,7 @@
                   <div class="form-row">
                     <div class="form-group col-12 mt-0 mb-1">
                       <label for="content" class="small font-weight-bolder mx-1 my-0">作業内容</label>
-                      <textarea class="form-control form-control-sm" id="content"
+                      <textarea class="form-control form-control-sm changeform" id="content"
                         th:errorclass="is-invalid" th:field="*{content}" th:readonly="${editControl}" rows="1"></textarea>
                       <div class="invalid-feedback" th:errors="*{content}">
                       </div>
@@ -192,7 +192,7 @@
                   <div class="form-row">
                     <div class="form-group col-12 my-0">
                       <label for="memo" class="small font-weight-bolder mx-1 my-0">メモ</label>
-                      <textarea class="form-control form-control-sm" id="memo" th:errorclass="is-invalid" th:field="*{memo}" rows="1"></textarea>
+                      <textarea class="form-control form-control-sm changeform" id="memo" th:errorclass="is-invalid" th:field="*{memo}" rows="1"></textarea>
                       <div class="invalid-feedback" th:errors="*{memo}">
                       </div>
                     </div>
@@ -317,7 +317,17 @@
         // submitボタンの有効化
         document.schedule_form.submit();
       }
-    }  
+    } 
+
+    // コメント書く
+    function init(){
+      $('.changeform').on('change', window.parent.onChangedFormContent)
+    }
+
+    // コメント書く
+    window.addEventListener('load',function(){
+      init();
+    });
     
   </script>
 

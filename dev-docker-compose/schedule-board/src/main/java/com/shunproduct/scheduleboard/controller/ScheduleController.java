@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
@@ -58,12 +59,22 @@ public class ScheduleController {
 			throws UnsupportedEncodingException {
 		
 		// スケジュール表示画面のパラメータ情報をsessionに保存
+		if (Objects.isNull(groupId) || startDate == null || displayTerm == null) {
+
+			if (siteUserRepository.findByUsername(principal.getName()).getGroupId() > 50) {
+				groupId = ScheduleDisplayParamDefaultConst.GROUPID;
+			} else {
+				groupId = String.valueOf(siteUserRepository.findByUsername(principal.getName()).getGroupId());
+			}
+			startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			displayTerm = ScheduleDisplayParamDefaultConst.DISPLAYTERM;
+		}
 		scheduleDisplayParam.setGroupId(Integer.parseInt(groupId));
 		scheduleDisplayParam.setStartDate(startDate);
 		scheduleDisplayParam.setDisplayTerm(Integer.parseInt(displayTerm));
 		// viewに渡す
 		model.addAttribute("scheduleDisplayParam", scheduleDisplayParam);
-
+		
 		// 表示する期間の設定
 		LocalDate ldStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate ldEndDate = ldStartDate.plusDays(Integer.parseInt(displayTerm));

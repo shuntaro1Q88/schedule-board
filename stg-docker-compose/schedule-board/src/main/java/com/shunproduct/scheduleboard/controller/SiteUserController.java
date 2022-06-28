@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.shunproduct.scheduleboard.entity.ScheduleDisplayParam;
 import com.shunproduct.scheduleboard.entity.SiteUser;
 import com.shunproduct.scheduleboard.repository.SiteUserRepository;
 import com.shunproduct.scheduleboard.service.PullDownContentService;
@@ -24,6 +25,11 @@ public class SiteUserController {
 	private final PullDownContentService pullDownContentService;
 	private final PasswordEncoder passwordEncoder;
 	private final SiteUserRepository siteUserRepository;
+	
+	@ModelAttribute("scheduleDisplayParam") // セッションに保存するオブジェクトの本体はメソッドに@ModelAttributeアノテーションを付けて作成する。
+	public ScheduleDisplayParam scheduleDisplayParam() {
+		return new ScheduleDisplayParam();
+	}
 	
 	@GetMapping("/user-register")
 	public String siteUserRegister(@ModelAttribute("siteUser") SiteUser siteUser, Model model) {
@@ -60,7 +66,7 @@ public class SiteUserController {
 	}
 	
 	@GetMapping("/admin/user-list")
-	public String siteUserList(@ModelAttribute("siteUser") SiteUser siteUser, Model model) {
+	public String siteUserList(@ModelAttribute("siteUser") SiteUser siteUser, Model model, ScheduleDisplayParam scheduleDisplayParam) {
 
 		// 表示データを抽出するためのプルダウン
 		model.addAttribute("pullDownContentService", pullDownContentService);
