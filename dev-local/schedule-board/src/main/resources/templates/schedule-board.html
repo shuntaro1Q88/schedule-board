@@ -64,7 +64,7 @@
           <div th:if="${role == 'admin'}">
             <a class="dropdown-item d-flex align-items-center m-0 px-2 py-0" th:href="@{/admin/user-list}">サイトユーザー管理</a>
             <a class="dropdown-item d-flex align-items-center m-0 px-2 py-0" th:href="@{/admin/member-list}">表示メンバー管理</a>
-            <a class="dropdown-item d-flex align-items-center m-0 px-2 py-0" href="@{#}">会社休日管理</a>
+            <a class="dropdown-item d-flex align-items-center m-0 px-2 py-0" th:href="@{/admin/holiday-setting}">会社休日管理</a>
             <a class="dropdown-item d-flex align-items-center m-0 px-2 py-0" th:href="@{/admin/data-export}">CSVデータ出力</a>
           </div>
         </div>

@@ -18,7 +18,7 @@ import lombok.Data;
  * (会社稼働日とカレンダーを合わせるため）
  * @param dowIndex ここでは、会社休日として、7を代入する
  */
-public class CompanyHolidays {
+public class CompanyHoliday {
 	
 	@Column("id")
 	@Id
