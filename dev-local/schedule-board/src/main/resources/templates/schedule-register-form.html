@@ -48,7 +48,8 @@
                       <label for="categoryId" class="small font-weight-bolder m-0">作業区分
                       </label>
                       <select class="form-control form-control-sm" id="categoryId" name="categoryId" th:errorclass="is-invalid" th:disabled="${editControl}">
-                        <option th:hidden disabled selected>選択してください</option>
+                        <!-- <option th:hidden disabled selected>選択してください</option> -->
+                        <option value="">選択してください</option>
                         <option th:each="scheduleCategoryMap : ${pullDownContentService.prepareScheduleCategoryMap()}"
                           th:value="${scheduleCategoryMap.key}"
                           th:text="${scheduleCategoryMap.value}"

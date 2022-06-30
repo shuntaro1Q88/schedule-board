@@ -14,22 +14,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class CompanyHolidaySaveService {
-	
+
 	private final CompanyHolidayRepository companyHolidayRepository;
-	
+
 	// 入力された日付がYYYY-MM-DD形式か判定
 	public Boolean checkDateFormate(String targetDate) {
-		
+
 		/**
-		 * \\d{4}   -->数字4個
-		 * \\d{2}   -->数字2個
-		 * \\-      -->-
+		 * \\d{4} -->数字4個 \\d{2} -->数字2個 \\- -->-
 		 */
 		String regex = "\\d{4}\\-\\d{2}\\-\\d{2}";
-		
+
 		return targetDate.matches(regex);
 	}
-	
+
 	public void saveHolidays(List<String> inputStrDateList) {
 
 		for (int i = 0; i < inputStrDateList.size(); i++) {
@@ -43,11 +41,6 @@ public class CompanyHolidaySaveService {
 				companyHoliday.setDowIndex(7);
 
 				companyHolidayRepository.save(companyHoliday);
-				
-				
-			} else {
-				// ToDo エラー処理
-				System.out.println("不正な値");
 			}
 		}
 	}

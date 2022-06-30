@@ -32,7 +32,7 @@
             <h5 class="mx-1 my-3 font-weight-bold text-dark">
               会社休日設定
             </h5>
-            <h6 class="font-weight-bold text-dark mt-3 mb-1 mx-1 far fa-list-alt">会社休日リスト</h6>
+            <h6 class="font-weight-bold text-dark mt-3 mb-1 mx-1"><i class="fas fa-list-alt mr-2"></i>会社休日リスト</h6>
             <form th:action="@{/admin/holiday-setting}" method="post" autocomplete="off" novalidate>
               <div class="form-row my-0">
 
@@ -89,7 +89,7 @@
               </tbody>
             </table>
 
-            <h6 class="mt-3 mb-1 mx-1 font-weight-bold text-dark far fa-calendar-plus">会社休日登録フォーム</h6>
+            <h6 class="mt-3 mb-1 mx-1 font-weight-bold text-dark"><i class="fas fa-calendar-plus mr-2"></i>会社休日登録フォーム</h6>
             <form th:action="@{/add-holiday}" method="post" autocomplete="off" novalidate>
               <div class="form-inline my-1 justify-content-center">
                 <input type="date" class="form-control form-control-sm" name="addCompanyHoliday1st" id="addCompanyHoliday1st">
