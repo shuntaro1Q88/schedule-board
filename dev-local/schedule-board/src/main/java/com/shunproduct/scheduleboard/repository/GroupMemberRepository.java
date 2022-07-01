@@ -11,13 +11,17 @@ import com.shunproduct.scheduleboard.entity.GroupMember;
 @Repository
 public interface GroupMemberRepository extends PagingAndSortingRepository<GroupMember, Long> {
 	
+	// 全レコード表示
+	@Query("SELECT * FROM group_members ORDER BY group_id ASC, display_order ASC")
+	List<GroupMember> findAllOrderByGroupIdASCAndDisplayOrderAsc();
+	
     // ユーザ一覧でデータ抽出
 	// グループ名のみ選択時
-	List<GroupMember> findAllByGroupId(int groupId);
+	List<GroupMember> findAllByGroupIdOrderByDisplayOrderAsc(int groupId);
 	// 苗字のみ入力時
-	List<GroupMember> findAllByFamilyNameContaining(String familyName);
+	List<GroupMember> findAllByFamilyNameContainingOrderByDisplayOrderAsc(String familyName);
 	// グループ名、苗字、両方入力時
-	List<GroupMember> findAllByGroupIdAndFamilyNameContaining(int groupId, String familyName);
+	List<GroupMember> findAllByGroupIdAndFamilyNameContainingOrderByDisplayOrderAsc(int groupId, String familyName);
 	
 	// スケジュール表示に使用
 	@Query("SELECT * FROM group_members\r\n"

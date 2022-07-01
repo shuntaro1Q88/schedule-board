@@ -48,10 +48,10 @@
             </select>
           </div>
 
-          <div class="col-md-auto col-sm-2 col-4">
+          <div class="col-sm-auto col-4">
             <button type="submit" class="form-control form-control-sm btn btn-sm btn-secondary mx-1 my-0">更新</button>
           </div>
-          <div class="col-md-auto col-sm-1 col-2 m-0 p-0 d-flex align-items-center justify-content-center">
+          <div class="col-sm-auto col-2 m-0 p-0 d-flex align-items-center justify-content-center">
             <a class="fas fa-caret-left fa-2x text-secondary text-decoration-none mx-2 pt-1" style="cursor: pointer;" onclick="update7dayBefore();"></a>
             <a class="fas fa-caret-right fa-2x text-secondary text-decoration-none mx-2 pt-1" style="cursor: pointer;" onclick="update7dayAfter();"></a>
           </div>
@@ -88,11 +88,11 @@
             <th:block th:each="date : ${displayDateList}">
               <th:block th:switch="${#strings.substringAfter(date,',')}">
                 <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:50px; "></th>
-                <th th:case="0" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
-                <th th:case="6" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #4169e1;"></th>
-                <th th:case="7" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #ff667d;"></th>
-                <th th:case="8" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #e0b941;"></th>
-                <th th:case="*" th:text="${#strings.substring(date,5,10)}" class="font-weight-bold text-white p-0" style="font-size: 0.75rem; background-color: #696969;"></th>
+                <th th:case="0" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="6" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #4169e1;"></th>
+                <th th:case="7" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
+                <th th:case="8" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #e0b941;"></th>
+                <th th:case="*" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #696969;"></th>
               </th:block>
             </th:block>
           </tr>

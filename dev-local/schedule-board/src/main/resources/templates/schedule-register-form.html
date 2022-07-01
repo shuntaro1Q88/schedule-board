@@ -214,9 +214,14 @@
                 </form>
 
                 <div th:unless="${scheduleId == null}" class="form-row">
-                  <div class="form-group col-6  my-0">
+                  <div class="form-group col-3  my-0">
                     <a th:href="@{/delete-schedule/{scheduleId}(scheduleId=*{scheduleId})}" class="btn btn-outline-danger btn-block btn-sm mt-0 py-1" onClick="return disp()" target="_parent">
                       <span class="text">削除</span>
+                    </a>
+                  </div>
+                  <div class="form-group col-3  my-0">
+                    <a th:href="@{'/add-schedule/' + ${schedule.getGroupId()} + '/' + ${schedule.getScheduleId()}}" class="btn btn-outline-info btn-block mt-0 py-1">
+                      <span class="text">複製</span>
                     </a>
                   </div>
                   <div class="form-group col-6  my-0">

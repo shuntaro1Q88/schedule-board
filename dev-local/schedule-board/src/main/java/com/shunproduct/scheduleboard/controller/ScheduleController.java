@@ -140,6 +140,21 @@ public class ScheduleController {
 		return "schedule-register-form";
 	}
 	
+	// 既存予定のコピー
+	@GetMapping("/add-schedule/{groupId}/{scheduleId}")
+	public String copySchedule(
+			@PathVariable("groupId") String groupId, @PathVariable("scheduleId") String scheduleId,
+			Model model, Principal principal) {
+		
+		Schedule schedule = this.scheduleRepository.findById(Long.parseLong(scheduleId)).get();
+		schedule.setScheduleId(null);
+		schedule.setScheduleGroupId(null);
+		model.addAttribute("schedule", schedule);
+		model.addAttribute("pullDownContentService", pullDownContentService);
+
+		return "schedule-register-form";
+	}
+	
 	// 入力された予定の処理
 	@PostMapping("/process-add-schedule")
 	public String process(@Validated @ModelAttribute Schedule schedule, BindingResult result, ScheduleDisplayParam scheduleDisplayParam,
