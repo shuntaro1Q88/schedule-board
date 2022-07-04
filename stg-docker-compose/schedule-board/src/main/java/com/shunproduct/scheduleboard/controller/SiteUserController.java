@@ -1,5 +1,7 @@
 package com.shunproduct.scheduleboard.controller;
 
+import java.security.Principal;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -128,6 +130,27 @@ public class SiteUserController {
 		siteUserRepository.deleteById(id);
 		
 		return "redirect:/admin/user-list";
+	}
+	
+	@GetMapping("/edit-user-password/{loginId}")
+	public String editSiteUerPassword(@ModelAttribute("user") SiteUser user, @PathVariable String loginId, Model model, Principal principal) {
+
+		model.addAttribute("user", siteUserRepository.findByUsername(loginId));
+		
+		// ログインIDと編集するユーザーのIDと一致するか判定
+		if(principal.getName().equals(siteUserRepository.findByUsername(loginId).getUsername())) {
+			return "user-password-edit-form";
+		}
+		return "redirect:/schedule-board";
+	}
+	
+	@PostMapping("/update-password")
+	public String updatePassword(@Validated @ModelAttribute("user") SiteUser user, BindingResult result) {
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		siteUserRepository.save(user);
+		
+		return "redirect:/schedule-board";
 	}
 
 }

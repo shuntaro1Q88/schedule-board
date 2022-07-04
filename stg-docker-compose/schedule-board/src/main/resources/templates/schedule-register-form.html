@@ -48,7 +48,8 @@
                       <label for="categoryId" class="small font-weight-bolder m-0">作業区分
                       </label>
                       <select class="form-control form-control-sm" id="categoryId" name="categoryId" th:errorclass="is-invalid" th:disabled="${editControl}">
-                        <option th:hidden disabled selected>選択してください</option>
+                        <!-- <option th:hidden disabled selected>選択してください</option> -->
+                        <option value="">選択してください</option>
                         <option th:each="scheduleCategoryMap : ${pullDownContentService.prepareScheduleCategoryMap()}"
                           th:value="${scheduleCategoryMap.key}"
                           th:text="${scheduleCategoryMap.value}"
@@ -213,9 +214,14 @@
                 </form>
 
                 <div th:unless="${scheduleId == null}" class="form-row">
-                  <div class="form-group col-6  my-0">
+                  <div class="form-group col-3  my-0">
                     <a th:href="@{/delete-schedule/{scheduleId}(scheduleId=*{scheduleId})}" class="btn btn-outline-danger btn-block btn-sm mt-0 py-1" onClick="return disp()" target="_parent">
                       <span class="text">削除</span>
+                    </a>
+                  </div>
+                  <div class="form-group col-3  my-0">
+                    <a th:href="@{'/add-schedule/' + ${schedule.getGroupId()} + '/' + ${schedule.getScheduleId()}}" class="btn btn-outline-info btn-block mt-0 py-1">
+                      <span class="text">複製</span>
                     </a>
                   </div>
                   <div class="form-group col-6  my-0">
@@ -319,12 +325,12 @@
       }
     } 
 
-    // コメント書く
+    // changeformを持つelementのchage eventが発生したときに、window.parent.onChangedFormContentを呼び出す
     function init(){
       $('.changeform').on('change', window.parent.onChangedFormContent)
     }
 
-    // コメント書く
+    // 画面が読み込まれた、init()を実行する
     window.addEventListener('load',function(){
       init();
     });

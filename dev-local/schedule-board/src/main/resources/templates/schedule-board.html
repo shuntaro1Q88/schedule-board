@@ -9,6 +9,7 @@
   <link th:href="@{/css/schedule.css}" rel="stylesheet" type="text/css">
   <script type="text/javascript" th:src="@{/js/schedule-board-reload.js}"></script>
   <script type="text/javascript" th:src="@{/js/schedule-board-modal-close.js}"></script>
+  <script type="text/javascript" th:src="@{/js/schedule-board-7days-update.js}"></script>
   <title>行動表示板</title>  
 </head>
 <body>
@@ -87,7 +88,7 @@
           <tr>
             <th:block th:each="date : ${displayDateList}">
               <th:block th:switch="${#strings.substringAfter(date,',')}">
-                <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:3.6rem; "></th>
+                <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:3.2rem;"></th>
                 <th th:case="0" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
                 <th th:case="6" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #4169e1;"></th>
                 <th th:case="7" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
@@ -100,7 +101,7 @@
         <tbody id="tableBody">
           <th:block th:each="users : ${userDayScheduleListMap.entrySet()}">
             <tr>
-              <th class="m-0 p-0"  style="width:3.6rem; vertical-align: middle;">
+              <th class="m-0 p-0" style="width:3.2rem; vertical-align: middle;">
                 <p class="font-weight-bold m-0 p-0 pl-1" th:text="${#strings.substringBefore(#strings.substringAfter(users.getKey(),'_'), ' ')}"></p>
                 <p class="font-weight-bold m-0 p-0 pl-1" th:text="${#strings.substringAfter(users.getKey(),' ')}"></p>
               </th>
@@ -145,12 +146,6 @@
           </div>
           <!-- モーダルの本文 -->
           <div class="modal-body m-0 p-0" id="honbun"></div>
-          <!-- モーダルのフッター -->
-          <!-- <div class="modal-footer m-0 px-3 py-1">  -->
-            <!-- 閉じるボタン -->
-            <!-- <button type="button" class="btn btn-secondary m-1 p-1" data-dismiss="modal">閉じる</button> -->
-            <!-- <button type="button" class="btn btn-primary">変更を保存</button> -->
-          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -195,36 +190,6 @@
     let scheduleSettingHeight = document.getElementById('scheduleSetting').clientHeight;
     let tableHeaderHeight = document.getElementById('tableHeader').clientHeight;
     tableBody.style.height =window.innerHeight - (scheduleSettingHeight + tableHeaderHeight) + 'px';
-
-    function update7dayBefore(){
-
-      var strStartDate = document.getElementById('startDate').value;
-      var dtStartDate = new Date(strStartDate)
-      // 7日前の日付をセット
-      var hoge = dtStartDate.setDate(dtStartDate.getDate() - 7)
-
-      var y = dtStartDate.getFullYear();
-      var m = ('00' + (dtStartDate.getMonth()+1)).slice(-2);
-      var d = ('00' + dtStartDate.getDate()).slice(-2);
-
-      startDate.value = y + '-' + m + '-' + d;
-      document.scheudle_param_form.submit();
-    }
-
-    function update7dayAfter(){
-
-      var strStartDate = document.getElementById('startDate').value;
-      var dtStartDate = new Date(strStartDate)
-      // 7日後の日付をセット
-      var hoge = dtStartDate.setDate(dtStartDate.getDate() + 7)
-
-      var y = dtStartDate.getFullYear();
-      var m = ('00' + (dtStartDate.getMonth()+1)).slice(-2);
-      var d = ('00' + dtStartDate.getDate()).slice(-2);
-
-      startDate.value = y + '-' + m + '-' + d;
-      document.scheudle_param_form.submit();
-    }
 
   </script>
 </body>

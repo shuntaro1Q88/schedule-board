@@ -34,7 +34,7 @@ public class GroupMemberController {
 		// 表示データを抽出するためのプルダウン
 		model.addAttribute("pullDownContentService", pullDownContentService);
 		// 表示データ
-		model.addAttribute("groupMembers", groupMemberRepository.findAll());
+		model.addAttribute("groupMembers", groupMemberRepository.findAllOrderByGroupIdASCAndDisplayOrderAsc());
 
 		return "member-list";
 	}
@@ -45,9 +45,9 @@ public class GroupMemberController {
 		// 選択条件に一致するユーザーを保存
 		// 表示データ
 		if(groupMember.getGroupId()==0) {
-			model.addAttribute("groupMembers", groupMemberRepository.findAllByFamilyNameContaining(groupMember.getFamilyName()));
+			model.addAttribute("groupMembers", groupMemberRepository.findAllByFamilyNameContainingOrderByDisplayOrderAsc(groupMember.getFamilyName()));
 		}else {
-			model.addAttribute("groupMembers", groupMemberRepository.findAllByGroupIdAndFamilyNameContaining(groupMember.getGroupId(),groupMember.getFamilyName()));
+			model.addAttribute("groupMembers", groupMemberRepository.findAllByGroupIdAndFamilyNameContainingOrderByDisplayOrderAsc(groupMember.getGroupId(),groupMember.getFamilyName()));
 		}
 		// 表示データを抽出するためのプルダウン
 		model.addAttribute("pullDownContentService", pullDownContentService);

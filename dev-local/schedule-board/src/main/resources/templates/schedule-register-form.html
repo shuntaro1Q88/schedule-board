@@ -325,12 +325,12 @@
       }
     } 
 
-    // コメント書く
+    // changeformを持つelementのchage eventが発生したときに、window.parent.onChangedFormContentを呼び出す
     function init(){
       $('.changeform').on('change', window.parent.onChangedFormContent)
     }
 
-    // コメント書く
+    // 画面が読み込まれた、init()を実行する
     window.addEventListener('load',function(){
       init();
     });
