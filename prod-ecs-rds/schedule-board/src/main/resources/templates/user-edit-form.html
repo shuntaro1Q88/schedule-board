@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <title>行動表示板 ユーザ情報変更</title>
+</head>
+<body class="bg-light">
+
+    <!-- Main -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-7 col-md-8">
+
+              <!-- DataTales -->
+              <div class="card shadow my-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-dark">
+                    ユーザ情報変更
+                  </h6>
+                </div>
+                
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <form th:action="@{/update-user}" th:object="${siteUser}"
+                      method="post">
+
+                      <input type="hidden" th:field="*{id}">
+                      <input type="hidden" th:field="*{password}">
+                  
+                      <div class="form-group">
+                        <label for="username">社員番号</label>
+                        <input type="text" class="form-control"
+                          th:errorclass="is-invalid" th:field="*{username}" readonly>
+                        <div class="invalid-feedback" th:errors="*{username}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="groupId">グループ名</label>
+                        <select class="form-control" id="groupId" name="groupId" th:errorclass="is-invalid">
+                          <option th:each="groupMap : ${pullDownContentService.prepareGroupMap()}"
+                            th:value="${groupMap.key}"
+                            th:text="${groupMap.value}"
+                            th:selected="${groupMap.key == selectedGroup}"> 
+                          </option>
+                         </select>
+                        <div class="invalid-feedback" th:errors="*{groupId}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="familyName">姓</label>
+                        <input type="text" class="form-control"
+                          th:errorclass="is-invalid" th:field="*{familyName}" readonly>
+                        <div class="invalid-feedback" th:errors="*{familyName}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="firstName">名</label>
+                        <input type="text" class="form-control"
+                          th:errorclass="is-invalid" th:field="*{firstName}" readonly>
+                        <div class="invalid-feedback" th:errors="*{firstName}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="role">権限</label>
+                        
+                        <select class="form-control" id="role" name="role" th:errorclass="is-invalid">
+                          <option th:each="roles : ${roles}" 
+                             th:value="${roles.roleName}" 
+                             th:text="${roles.roleName}"
+                             th:selected="${roles.roleName == selectedRole}"> 
+                           </option>
+                         </select>
+                        
+                        <div class="invalid-feedback" th:errors="*{role}">
+                        </div>
+                      </div>
+                    
+                      <!-- Divider -->
+                      <hr class="sidebar-divider my-2">
+                    
+                      <button class="btn btn-dark btn-user btn-block mb-3">
+                        <span class="text">更新</span>
+                      </button>
+                    </form>
+                    
+                    <a class="btn btn-white btn-outline-secondary btn-block" th:href="@{/admin/user-list}" role="button">戻る</a>
+                    
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Main -->
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
