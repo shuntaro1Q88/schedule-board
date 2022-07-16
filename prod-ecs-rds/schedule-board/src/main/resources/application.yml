@@ -2,14 +2,13 @@ spring:
   # DB接続先設定
   datasource:
     # local開発環境の場合
-    url : jdbc:postgresql://localhost:5432/schedule_board
+    # url : jdbc:postgresql://localhost:5432/schedule_board
     # docker-composeの開発環境の場合
-    # url : jdbc:postgresql://postgresql:5432/schedule_board
+    url : jdbc:postgresql://postgresql:5432/schedule_board
     # rdsの場合
-    # url : jdbc:postgresql://schedule-board-ecs.cgb3wdsrhbsj.ap-northeast-1.rds.amazonaws.com:5432/schedule_board
-    username : postgres
-    # password : EnZGxZLduq4t
-    password : postgres
+    # url : jdbc:postgresql://xxx
+    password : xxx
+    # password : postgres
     driver-class-name : org.postgresql.Driver
   # アプリ起動時にテーブル初期化
   # docker-composeの場合、使用しない
