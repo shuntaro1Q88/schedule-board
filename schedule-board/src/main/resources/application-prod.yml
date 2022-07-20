@@ -2,7 +2,7 @@ spring:
   # DB接続先設定
   datasource:
     # rds利用
-    url : xxx
+    url : jdbc:postgresql://xxx/schedule_board
     username : xxx
     password : xxx
     driver-class-name : org.postgresql.Driver

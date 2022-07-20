@@ -97,7 +97,7 @@
                   </div>
 
                   <label class="small font-weight-bolder mx-1 mt-1 mb-0" id="memberListLabel">作業者一覧
-                  <span class="small m-0">hogehoge</span>
+                  <span class="small m-0">*1名以上、選択して下さい*</span>
                   </label>
                   <div class="form-row">
                     <div class="form-group col-6 mt-0 mb-1">
@@ -155,7 +155,7 @@
                   </div>
                   
                   <label class="small font-weight-bolder mx-1 mt-1 mb-0" id="workDateListLabel">作業日一覧
-                  <span class="small m-0" id="workDateList">fugefuge</span>
+                  <span class="small m-0" id="workDateList">*日付の重複は可*</span>
                   </label>
                   <div class="form-row">
                     <div class="form-group col-6 mt-0 mb-1">
@@ -227,7 +227,7 @@
                   <div class="form-group col-6  my-0">
                     <a th:href="@{'/add-schedule/' + ${schedule.getGroupId()} + '/' + ${schedule.getMemberId()} + '/' + ${schedule.getMainDate()}}"
                       class="btn btn-outline-success btn-block btn-sm mt-0 py-1">
-                      <span class="text" style="font-size: 0.75rem;">新規登録フォームを開く</span>
+                      <span class="text font-weight-bold" style="font-size: 0.75rem;">新規登録フォームを開く</span>
                     </a>
                   </div>
                 </div>
@@ -265,11 +265,11 @@
       // 取得したcategoryIdの値をsubjectLineに渡す
       var subjectLine = document.getElementById('subjectLine');
       //件名にデータがない場合、処理する
-      if(!subjectLine.value && event.currentTarget.value.includes(3)){
+      if(!subjectLine.value && event.currentTarget.value == '3'){
         subjectLine.value = 'ｺｰﾙｾﾝﾀｰ';
-      }else if(!subjectLine.value && event.currentTarget.value.includes(8)){
+      }else if(!subjectLine.value && event.currentTarget.value == '8'){
         subjectLine.value = '在宅';
-      }else if(!subjectLine.value && event.currentTarget.value.includes(10)){
+      }else if(!subjectLine.value && event.currentTarget.value == '10'){
         subjectLine.value = '社内便当番';
       }
     }
@@ -288,9 +288,9 @@
       memberList.push(document.getElementById('addMemberId3rd').value);
       memberList.push(document.getElementById('addMemberId4th').value);
       memberList.push(document.getElementById('addMemberId5th').value);
-      var memberListLength = memberList[0].length + memberList[1].length
-                            + memberList[2].length + memberList[3].length
-                            + memberList[4].length;
+      var memberListLength
+        = memberList[0].length + memberList[1].length + memberList[2].length
+        + memberList[3].length + memberList[4].length;
       console.log('memberListLength : '+ memberListLength);
 
       var workDateList = [];
@@ -299,10 +299,9 @@
       workDateList.push(document.getElementById('addDate3rd').value);
       workDateList.push(document.getElementById('addDate4th').value);
       workDateList.push(document.getElementById('addDate5th').value);
-      var workDateListLength = workDateList[0].length + workDateList[1].length
-                              + workDateList[2].length + workDateList[3].length
-                              + workDateList[4].length;
-
+      var workDateListLength
+        = workDateList[0].length + workDateList[1].length + workDateList[2].length
+        + workDateList[3].length + workDateList[4].length;
       console.log('workDateListLength : '+ workDateListLength);
 
       if(subjectLine==="" || categoryId==="" || memberListLength === 0 || workDateListLength === 0){

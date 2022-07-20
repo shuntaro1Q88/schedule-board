@@ -88,12 +88,12 @@
           <tr>
             <th:block th:each="date : ${displayDateList}">
               <th:block th:switch="${#strings.substringAfter(date,',')}">
-                <th th:case="param" class="font-weight-bold py-0" style="background-color: #696969; width:3.2rem;"></th>
-                <th th:case="0" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
-                <th th:case="6" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #4169e1;"></th>
-                <th th:case="7" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #ff667d;"></th>
-                <th th:case="8" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #e0b941;"></th>
-                <th th:case="*" th:text="${#strings.substringBefore(date,',')}" class="font-weight-bold text-white p-0" style="vertical-align: middle; font-size: 0.75rem; background-color: #696969;"></th>
+                <th th:case="param" class="font-weight-bold py-0" style="background-color: #666666; width:3.2rem;"></th>
+                <th th:case="0" th:text="${#strings.substringBefore(date,',')}" class="p-0" style="vertical-align: middle; font-size: 0.75rem; color:#fff; background-color: #ff667d;"></th>
+                <th th:case="6" th:text="${#strings.substringBefore(date,',')}" class="p-0" style="vertical-align: middle; font-size: 0.75rem; color:#fff; background-color: #4169e1;"></th>
+                <th th:case="7" th:text="${#strings.substringBefore(date,',')}" class="p-0" style="vertical-align: middle; font-size: 0.75rem; color:#fff; background-color: #ff667d;"></th>
+                <th th:case="8" th:text="${#strings.substringBefore(date,',')}" class="p-0" style="vertical-align: middle; font-size: 0.75rem; color:#fff; background-color: #e0b941;"></th>
+                <th th:case="*" th:text="${#strings.substringBefore(date,',')}" class="p-0" style="vertical-align: middle; font-size: 0.75rem; color:#fff; background-color: #666666;"></th>
               </th:block>
             </th:block>
           </tr>
@@ -177,7 +177,7 @@
       var winHeight = $(window).height();
       $(".modal-autoheight .modal-body").css({
         width: "auto",
-        height: (winHeight - 95) + "px"
+        height: (winHeight) + "px"
       });
     }
 

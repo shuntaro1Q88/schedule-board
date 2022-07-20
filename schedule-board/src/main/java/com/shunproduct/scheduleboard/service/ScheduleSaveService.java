@@ -144,6 +144,10 @@ public class ScheduleSaveService {
 			// 作業日
 			schedule.setMainDate(workDateList.get(0));
 			schedule.setAddDate1st(workDateList.get(0));
+			schedule.setAddDate2nd(null);
+			schedule.setAddDate3rd(null);
+			schedule.setAddDate4th(null);
+			schedule.setAddDate5th(null);
 
 			scheduleRepository.save(schedule);
 
@@ -372,10 +376,10 @@ public class ScheduleSaveService {
 			// 作業日
 			schedule.setMainDate(workDateList.get(0));
 			schedule.setAddDate1st(workDateList.get(0));
-			schedule.setAddDate2nd(workDateList.get(0));
-			schedule.setAddDate3rd(workDateList.get(0));
-			schedule.setAddDate4th(workDateList.get(0));
-			schedule.setAddDate5th(workDateList.get(0));
+//			schedule.setAddDate2nd(workDateList.get(0));
+//			schedule.setAddDate3rd(workDateList.get(0));
+//			schedule.setAddDate4th(workDateList.get(0));
+//			schedule.setAddDate5th(workDateList.get(0));
 			
 			scheduleRepository.save(schedule);
 
