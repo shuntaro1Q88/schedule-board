@@ -204,7 +204,7 @@
 
                   <div class="form-row">
                     <div class="form-group col-6 my-1">
-                      <input class="btn btn-primary btn-block btn-sm py-1" type="submit" value="登録" onclick="return check();">
+                      <input class="btn btn-primary btn-block btn-sm py-1" type="submit" value="登録" id="form-submit" onclick="return check();">
                       <!-- <input class="btn btn-primary btn-block py-1" type="submit" value="保存"> -->
                     </div>
                     <div class="form-group col-6 my-1">
@@ -319,10 +319,12 @@
           document.getElementById('memberListLabel').style.backgroundColor = 'transparent';
         }
       }else{
-        // 二重送信の防止
-        document.schedule_form.disaled = true;
         // submitボタンの有効化
-        return document.schedule_form.submit();
+        document.schedule_form.submit();
+        // 二重送信の防止
+        document.getElementById('form-submit').disabled = true;
+        // document.schedule_form.disabled = true;
+        return false;
       }
     } 
 
